@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/backpack_menuItem"
+        android:title="Bag"
+        android:icon="@drawable/backpack_item"/>
+    <item
+        android:id="@+id/todo_menuItem"
+        android:title="Todo"
+        android:icon="@drawable/todo_item" />
+
+    <item
+        android:id="@+id/mybag_menuItem"
+        android:title="My Bag"
+        android:icon="@drawable/select_item"/>
+    <item
+        android:id="@+id/profile_menuItem"
+        android:title="Profile"
+        android:icon="@drawable/profile_item"/>
+
+
+</menu>
