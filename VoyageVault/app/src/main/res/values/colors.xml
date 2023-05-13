@@ -3,5 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button">#096BFF</color>
+    <color name="bottomNav">#B8D5FF</color>
+    <color name="bottomNavItems">#003480</color>
 <!--    <color name="">#096BFF</color>-->
 </resources>
