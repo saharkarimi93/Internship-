@@ -1,4 +1,4 @@
-package vault.voyage.app.model
+package vault.voyage.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
