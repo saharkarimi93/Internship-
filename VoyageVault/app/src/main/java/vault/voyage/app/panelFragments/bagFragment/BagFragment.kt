@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
+import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItemsAdapter
 
 
 class BagFragment : Fragment() {
@@ -21,7 +23,11 @@ class BagFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bag, container, false)
+        val view =  inflater.inflate(R.layout.fragment_bag, container, false)
+        val bag_recyclerview = view.findViewById<RecyclerView>(R.id.bagItems_recyclerview)
+
+
+        return view;
     }
 
 }
