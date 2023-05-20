@@ -14,12 +14,6 @@ class BagItemsAdapter(val context:Context,val items:List<BagItem>): RecyclerView
     {
         val image = itemView.findViewById<ImageView>(R.id.item_image)
         val title = itemView.findViewById<TextView>(R.id.item_title)
-
-        fun bindItem(item:BagItem,context:Context){
-//            image.setImageResource(R.drawable.)
-            title.text = item.title
-
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -32,6 +26,8 @@ class BagItemsAdapter(val context:Context,val items:List<BagItem>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bindItem(items[position],context)
+        val currentItem = items[position]
+        holder.title.text = currentItem.title
+        holder.image.setImageResource(currentItem.image)
     }
 }

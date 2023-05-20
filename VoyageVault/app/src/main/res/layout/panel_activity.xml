@@ -7,8 +7,9 @@
     tools:context=".PanelActivity">
 
     <FrameLayout
-        android:layout_width="149dp"
-        android:layout_height="123dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/panels_container"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +23,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:backgroundTint="@color/bottomNav"
         app:menu="@menu/bottom_nav"/>
-    
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
