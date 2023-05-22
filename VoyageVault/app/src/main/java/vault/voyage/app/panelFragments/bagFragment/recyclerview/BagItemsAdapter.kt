@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
@@ -14,6 +15,7 @@ class BagItemsAdapter(val context: Context?, val items:List<BagItem>): RecyclerV
     {
         val image = itemView.findViewById<ImageView>(R.id.item_image)
         val title = itemView.findViewById<TextView>(R.id.item_title)
+        val lv = itemView.findViewById<LinearLayout>(R.id.linearLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -29,5 +31,6 @@ class BagItemsAdapter(val context: Context?, val items:List<BagItem>): RecyclerV
         val currentItem = items[position]
         holder.title.text = currentItem.title
         holder.image.setImageResource(currentItem.image)
+        holder.lv.setBackgroundColor(currentItem.color)
     }
 }
