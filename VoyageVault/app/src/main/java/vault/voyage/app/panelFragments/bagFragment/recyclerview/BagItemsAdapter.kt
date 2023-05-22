@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
 
-class BagItemsAdapter(val context:Context,val items:List<BagItem>): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
+class BagItemsAdapter(val context: Context?, val items:List<BagItem>): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val image = itemView.findViewById<ImageView>(R.id.item_image)
