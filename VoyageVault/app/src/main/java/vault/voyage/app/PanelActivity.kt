@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import vault.voyage.app.R
 import vault.voyage.app.panelFragments.ProfileFragment
 import vault.voyage.app.panelFragments.SelectedItemsFragment
-import vault.voyage.app.panelFragments.TodoFragment
+import vault.voyage.app.panelFragments.todoFragment.TodoFragment
 import vault.voyage.app.panelFragments.bagFragment.BagFragment
 
 class PanelActivity : AppCompatActivity() {
