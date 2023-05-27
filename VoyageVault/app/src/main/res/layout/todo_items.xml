@@ -23,7 +23,8 @@
         <TextView
             android:id="@+id/task_information"
             android:layout_width="249dp"
-            android:layout_height="62dp" />
+            android:layout_height="62dp"
+            android:gravity="center_vertical"/>
 
     </LinearLayout>
 
