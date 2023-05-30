@@ -38,6 +38,7 @@
                 android:layout_width="280dp"
                 android:layout_height="50dp"
                 android:hint="Task"
+                android:id="@+id/todo_editText"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton
@@ -46,6 +47,7 @@
             android:backgroundTint="@color/button"
             android:text="Add"
             app:cornerRadius="5dp"
+            android:id="@+id/add_todo_button"
             />
 
     </LinearLayout>
