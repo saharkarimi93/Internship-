@@ -2,11 +2,15 @@ package vault.voyage.app.panelFragments.todoFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +22,7 @@ import vault.voyage.app.panelFragments.todoFragment.recyclerview.TodoItemsAdapte
 class TodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        super.setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -27,6 +31,11 @@ class TodoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view:View = inflater.inflate(R.layout.fragment_todo, container, false)
+
+        var todoToolbar: Toolbar = view.findViewById(R.id.todo_toolbar)
+        var activity:AppCompatActivity = getActivity() as AppCompatActivity
+        activity.setSupportActionBar(todoToolbar)
+
         val todoItems_recyclerView:RecyclerView = view.findViewById(R.id.todo_items_recyclerview)
         val addButton:Button = view.findViewById(R.id.add_todo_button)
         val todo_editText:EditText = view.findViewById(R.id.todo_editText)
@@ -44,5 +53,12 @@ class TodoFragment : Fragment() {
         }
         return view
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.todo_toolbar,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
 }

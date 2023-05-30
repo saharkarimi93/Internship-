@@ -1,6 +1,7 @@
 package vault.voyage.app.panelFragments.todoFragment.recyclerview
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
-import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItem
-import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItemsAdapter
+
 
 class TodoItemsAdapter (val context: Context?, var items:MutableList<TodoItem>): RecyclerView.Adapter<TodoItemsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemsAdapter.ViewHolder {
@@ -28,7 +28,6 @@ class TodoItemsAdapter (val context: Context?, var items:MutableList<TodoItem>):
         holder.done_task.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 Toast.makeText(context,"Task is Done",Toast.LENGTH_SHORT).show()
-                items.remove(currentItem)
                 notifyDataSetChanged()
             }
         }
@@ -36,6 +35,8 @@ class TodoItemsAdapter (val context: Context?, var items:MutableList<TodoItem>):
     }
     inner class ViewHolder(todoItemView: View): RecyclerView.ViewHolder(todoItemView) {
         val done_task = todoItemView.findViewById<CheckBox>(R.id.task_done_checkbox)
+
         val desc = todoItemView.findViewById<TextView>(R.id.task_information)
+
     }
 }

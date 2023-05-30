@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/done_tasks_list"
+        android:title="Done Tasks"
+        android:icon="@drawable/task_compeleted"/>
+    <item
+        android:id="@+id/remove_all_tasks"
+        android:title="Clear Tasks"
+        android:icon="@drawable/remove_all_tasks"/>
+</menu>
