@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,9 +22,12 @@ import vault.voyage.app.panelFragments.todoFragment.recyclerview.TodoItemsAdapte
 
 
 class TodoFragment : Fragment() {
+    private lateinit var items:MutableList<TodoItem>
+    private lateinit var adapter: TodoItemsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -31,7 +36,7 @@ class TodoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view:View = inflater.inflate(R.layout.fragment_todo, container, false)
-
+        activity?.setTitle("Todo")
         var todoToolbar: Toolbar = view.findViewById(R.id.todo_toolbar)
         var activity:AppCompatActivity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(todoToolbar)
@@ -40,8 +45,8 @@ class TodoFragment : Fragment() {
         val addButton:Button = view.findViewById(R.id.add_todo_button)
         val todo_editText:EditText = view.findViewById(R.id.todo_editText)
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        val items:MutableList<TodoItem> = arrayListOf(TodoItem("Test 1"),TodoItem("Test 2"),TodoItem("Test 3"))
-        val adapter = TodoItemsAdapter(context,items)
+        items = arrayListOf(TodoItem("Test 1"),TodoItem("Test 2"),TodoItem("Test 3"))
+        adapter = TodoItemsAdapter(context,items)
         todoItems_recyclerView.adapter =adapter
         addButton.setOnClickListener {
             if(!todo_editText.text.isEmpty()){
@@ -58,6 +63,23 @@ class TodoFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.todo_toolbar,menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.remove_all_tasks->{
+                items.clear()
+                adapter.notifyDataSetChanged()
+                Toast.makeText(context,"All Items Removed",Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.done_tasks_list->{
+                Toast.makeText(context,"Completed Tasks List",Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

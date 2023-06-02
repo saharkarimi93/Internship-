@@ -2,6 +2,10 @@ package vault.voyage.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import vault.voyage.app.panelFragments.ProfileFragment
@@ -17,6 +21,8 @@ class PanelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.panel_activity)
+
+
         val bottom_nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         switchFragment(bag)
         bottom_nav.setOnItemSelectedListener {
