@@ -1,7 +1,6 @@
 package vault.voyage.app.panelFragments.todoFragment.recyclerview
 
 import android.content.Context
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
+import vault.voyage.app.model.Task
 
 
-class TodoItemsAdapter (val context: Context?, var items:MutableList<TodoItem>): RecyclerView.Adapter<TodoItemsAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemsAdapter.ViewHolder {
+class TasksAdapter (val context: Context?, var items:MutableList<Task>): RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.todo_items,parent,false)
         return ViewHolder(view)
     }
@@ -22,7 +22,7 @@ class TodoItemsAdapter (val context: Context?, var items:MutableList<TodoItem>):
         return items.count()
     }
 
-    override fun onBindViewHolder(holder: TodoItemsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TasksAdapter.ViewHolder, position: Int) {
         val currentItem = items[position]
         holder.desc.text = currentItem.description
         holder.done_task.setOnCheckedChangeListener { buttonView, isChecked ->

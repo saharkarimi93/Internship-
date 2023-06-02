@@ -17,13 +17,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
-import vault.voyage.app.panelFragments.todoFragment.recyclerview.TodoItem
-import vault.voyage.app.panelFragments.todoFragment.recyclerview.TodoItemsAdapter
+import vault.voyage.app.model.Task
+import vault.voyage.app.panelFragments.todoFragment.recyclerview.TasksAdapter
 
 
 class TodoFragment : Fragment() {
-    private lateinit var items:MutableList<TodoItem>
-    private lateinit var adapter: TodoItemsAdapter
+    private lateinit var items:MutableList<Task>
+    private lateinit var adapter: TasksAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setHasOptionsMenu(true)
@@ -45,12 +45,12 @@ class TodoFragment : Fragment() {
         val addButton:Button = view.findViewById(R.id.add_todo_button)
         val todo_editText:EditText = view.findViewById(R.id.todo_editText)
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        items = arrayListOf(TodoItem("Test 1"),TodoItem("Test 2"),TodoItem("Test 3"))
-        adapter = TodoItemsAdapter(context,items)
+        items = arrayListOf(Task("Test 1"), Task("Test 2"), Task("Test 3"))
+        adapter = TasksAdapter(context,items)
         todoItems_recyclerView.adapter =adapter
         addButton.setOnClickListener {
             if(!todo_editText.text.isEmpty()){
-                items.add(0,TodoItem(todo_editText.text.toString()))
+                items.add(0, Task(todo_editText.text.toString()))
                 todo_editText.text.clear()
                 Toast.makeText(context,"New Todo Item Added",Toast.LENGTH_LONG).show()
                 adapter.notifyItemRangeChanged(0,items.count())

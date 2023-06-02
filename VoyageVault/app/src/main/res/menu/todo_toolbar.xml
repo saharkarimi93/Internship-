@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <item
         android:id="@+id/done_tasks_list"
         android:title="Done Tasks"
-        android:icon="@drawable/task_compeleted"/>
+        android:icon="@drawable/completed_tasks"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/remove_all_tasks"
         android:title="Clear Tasks"
-        android:icon="@drawable/remove_all_tasks"/>
+        android:icon="@drawable/clear_tasks"
+        app:showAsAction="ifRoom"/>
 </menu>

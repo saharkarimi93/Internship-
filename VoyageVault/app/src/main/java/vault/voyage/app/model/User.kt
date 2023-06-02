@@ -4,10 +4,12 @@ import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 
 class User(name:String,email:String, number:String){
-    var name = name
+    private var userList = Todo()
+        get() = field
+    private var name = name
         get() = field
         set(value) {field = value}
-    var email = email
+    private var email = email
         get() = field
         set(value) {
             val matchPattern = Regex("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$");
