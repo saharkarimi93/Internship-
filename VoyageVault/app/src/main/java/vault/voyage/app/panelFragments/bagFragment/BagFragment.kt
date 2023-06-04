@@ -9,11 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
+import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItem
 import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItemsAdapter
 
 
-class BagFragment : Fragment() {
+class BagFragment(user: User) : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
