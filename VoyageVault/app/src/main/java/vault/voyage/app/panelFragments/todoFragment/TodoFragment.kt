@@ -52,7 +52,7 @@ class TodoFragment(user: User) : Fragment() {
         val addButton:Button = view.findViewById(R.id.add_todo_button)
         val todo_editText:EditText = view.findViewById(R.id.todo_editText)
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TasksAdapter(context,items.getTasks(),user)
+        adapter = TasksAdapter(context,items.getTasks(),user,activity)
         todoItems_recyclerView.adapter =adapter
         addButton.setOnClickListener {
             if(!todo_editText.text.isEmpty()){
