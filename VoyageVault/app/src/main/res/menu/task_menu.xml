@@ -3,4 +3,6 @@
 
     <item android:title="Delete"
         android:id="@+id/delete_task_menuItem"/>
+    <item android:title="Complete"
+        android:id="@+id/complete_task_menuItem"/>
 </menu>

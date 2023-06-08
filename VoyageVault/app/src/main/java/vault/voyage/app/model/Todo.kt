@@ -3,37 +3,35 @@ package vault.voyage.app.model
 import kotlin.streams.toList
 
 class Todo() {
-    private val allTodo = ArrayList<Task>()
-    fun getUndoneTasks():ArrayList<Task>{
-        var list = allTodo.stream()
-            .filter{ t -> !t.isDone()}
-            .toList() as ArrayList<Task>
-        return list
-    }
-    fun getDoneTasks():ArrayList<Task>{
-        var list = allTodo.stream()
-            .filter { t -> t.isDone() }
-            .toList() as ArrayList<Task>
-        return list
+    private val undoneTasks = ArrayList<Task>()
+    private val doneTasks = ArrayList<Task>()
 
+    fun getDoneTasks():ArrayList<Task>{
+        return doneTasks
     }
+
     fun getTasks():ArrayList<Task>{
-        return allTodo
+        return undoneTasks
     }
     fun removeTask(task:Task){
-        allTodo.remove(task)
+        undoneTasks.remove(task)
+        doneTasks.remove(task)
     }
     fun restore(pos:Int):Unit{
-        getDoneTasks()[pos].unDoneTask()
+        val task = doneTasks[pos]
+        task.unDoneTask()
+        doneTasks.remove(task)
+        undoneTasks.add(task)
     }
     fun clearList(){
-        allTodo.clear()
+        undoneTasks.clear()
     }
     fun doneTask(pos: Int):Unit{
-        allTodo[pos].doneTask()
+        val task = undoneTasks[pos]
+        task.doneTask()
+        doneTasks.add(task)
+        undoneTasks.remove(task)
 
     }
-    fun removeDoneTask( t:Task){
-        t.unDoneTask()
-    }
+
 }

@@ -27,13 +27,16 @@ class CompletedTaskAdapter (val context: Context?, var items:Todo): RecyclerView
         holder.desc.text = currentItem.description
         holder.restore.setOnClickListener {
             items.restore(position)
+            notifyDataSetChanged()
         }
         holder.delete.setOnClickListener {
             items.removeTask(currentItem)
+            notifyDataSetChanged()
         }
 
     }
     inner class ViewHolder(todoItemView: View): RecyclerView.ViewHolder(todoItemView) {
+        val title = todoItemView.findViewById<TextView>(R.id.done_task_title)
         val desc = todoItemView.findViewById<TextView>(R.id.done_task_info)
         val restore = todoItemView.findViewById<ImageButton>(R.id.restore_button)
         val delete = todoItemView.findViewById<ImageButton>(R.id.delete_button)

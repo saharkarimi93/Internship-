@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginRight="5dp"
-    android:layout_marginLeft="5dp"
-    >
-    <androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_height="90dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    android:padding="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="5dp"
-        app:cardElevation="3dp">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:id="@+id/item_card">
+
+        <TextView
+            android:id="@+id/done_task_info"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="1 Year exp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/restore_button"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@id/done_task_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/done_task_title" />
+
+        <TextView
+            android:id="@+id/done_task_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/restore_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/restore"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/done_task_info"
-                android:layout_width="283dp"
-                android:layout_height="62dp"
-                android:gravity="center_vertical" />
-            <ImageButton
-                android:id="@+id/restore_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/restore"
-                android:scaleType="fitCenter"
-                />
-            <ImageButton
-                android:id="@+id/delete_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/clear_tasks"
-                android:scaleType="fitCenter"
-                />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="28dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/clear_tasks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

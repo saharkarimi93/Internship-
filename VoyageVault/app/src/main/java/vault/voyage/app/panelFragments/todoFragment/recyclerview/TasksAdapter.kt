@@ -49,6 +49,13 @@ class TasksAdapter (
                         notifyDataSetChanged()
                     }
                 }
+                R.id.complete_task_menuItem->{
+                    user.todoList.doneTask(position)
+                    Toast.makeText(context,"Task Completed successfully",Toast.LENGTH_SHORT).show()
+                    activity.runOnUiThread {
+                        notifyDataSetChanged()
+                    }
+                }
             }
             true
         }
