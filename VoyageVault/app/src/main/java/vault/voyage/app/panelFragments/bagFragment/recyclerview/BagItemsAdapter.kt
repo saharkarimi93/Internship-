@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
+import vault.voyage.app.panelFragments.bagFragment.bagSelectedItem.BagSelectedItemFragment
 
-class BagItemsAdapter(val context: Context?, val items:List<BagItem>): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
+class BagItemsAdapter(val context: Context?,val activity:AppCompatActivity, val items:List<BagItem>): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val image = itemView.findViewById<ImageView>(R.id.item_image)
         val title = itemView.findViewById<TextView>(R.id.item_title)
-        val lv = itemView.findViewById<LinearLayout>(R.id.linearLayout)
+        val bag_list_item = itemView.findViewById<LinearLayout>(R.id.bag_list_item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -31,6 +34,18 @@ class BagItemsAdapter(val context: Context?, val items:List<BagItem>): RecyclerV
         val currentItem = items[position]
         holder.title.text = currentItem.title
         holder.image.setImageResource(currentItem.image)
-        holder.lv.setBackgroundColor(currentItem.color)
+        holder.bag_list_item.setBackgroundColor(currentItem.color)
+        holder.bag_list_item.setOnClickListener {
+            switchFragment(BagSelectedItemFragment(currentItem.items))
+        }
+
+    }
+    fun switchFragment(fragment: Fragment):Boolean{
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.panels_container,fragment)
+            ?.commit()
+        return true
+
     }
 }
