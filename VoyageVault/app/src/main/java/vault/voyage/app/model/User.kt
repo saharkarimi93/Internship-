@@ -5,6 +5,7 @@ import vault.voyage.app.exceptions.InvalidPhoneNumber
 
 class User(name:String,email:String, number:String){
     var todoList = Todo()
+    var userBag:MutableSet<SelectedItem> = mutableSetOf()
     var name = name
         get() = field
         set(value) {field = value}

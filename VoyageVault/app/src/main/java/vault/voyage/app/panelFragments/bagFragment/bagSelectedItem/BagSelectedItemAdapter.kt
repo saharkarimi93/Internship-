@@ -9,16 +9,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import vault.voyage.app.PanelActivity
 import vault.voyage.app.R
-import vault.voyage.app.model.Task
-import java.time.Duration
+import vault.voyage.app.model.SelectedItem
+import vault.voyage.app.model.User
 
 class BagSelectedItemAdapter(
     val context: Context?,
     val activity: AppCompatActivity,
     var items:MutableList<SelectedItem>,
-    ): RecyclerView.Adapter<BagSelectedItemAdapter.ViewHolder>() {
+    val user:User
+): RecyclerView.Adapter<BagSelectedItemAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,11 +38,17 @@ class BagSelectedItemAdapter(
         menu.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.add_selected_item_menuItem ->{
-                    Toast.makeText(context,"Item Added to your Bag",Toast.LENGTH_SHORT).show()
+                    val itemAdded:Boolean = user.userBag.add(currentItem)
+                    if(itemAdded)
+                        Toast.makeText(context,"Item Added to your Bag",Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(context,"Item Exists in your bag",Toast.LENGTH_SHORT).show()
                 }
                 R.id.delete_selected_item_menuItem->{
+                    items.remove(currentItem)
                     Toast.makeText(context,"Item Deleted Successfully!",Toast.LENGTH_SHORT).show()
 
+                    notifyDataSetChanged()
                 }
             }
             true

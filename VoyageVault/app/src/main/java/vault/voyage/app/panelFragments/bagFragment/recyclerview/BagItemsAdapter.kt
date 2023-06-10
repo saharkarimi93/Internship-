@@ -11,9 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
+import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.bagFragment.bagSelectedItem.BagSelectedItemFragment
 
-class BagItemsAdapter(val context: Context?,val activity:AppCompatActivity, val items:List<BagItem>): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
+class BagItemsAdapter(
+    val context: Context?,
+    val activity:AppCompatActivity,
+    val items:List<BagItem>,
+    val user:User
+): RecyclerView.Adapter<BagItemsAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val image = itemView.findViewById<ImageView>(R.id.item_image)
@@ -36,7 +42,7 @@ class BagItemsAdapter(val context: Context?,val activity:AppCompatActivity, val 
         holder.image.setImageResource(currentItem.image)
         holder.bag_list_item.setBackgroundColor(currentItem.color)
         holder.bag_list_item.setOnClickListener {
-            switchFragment(BagSelectedItemFragment(currentItem.items))
+            switchFragment(BagSelectedItemFragment(currentItem.items,user))
         }
 
     }
