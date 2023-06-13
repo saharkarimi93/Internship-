@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
@@ -30,7 +31,7 @@ class BagFragment(val user: User) : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_bag, container, false)
         val bag_recyclerview = view.findViewById<RecyclerView>(R.id.bagItems_recyclerview)
-        bag_recyclerview.layoutManager = LinearLayoutManager(context)
+        bag_recyclerview.layoutManager = GridLayoutManager(context,2)
 
         val clothingList = stringToMutableList("Clothing","Stockings,Underwear,Pajamas,T shirts,Casual Dress,Evening Dress,Shirt,Cardigan,Vest,Jacket,Skirt,Trousers,Jeans,Shorts,Suit,Coat,Rain Coat,Glove,Hat, Scarf,Bikini,Belt,Slipper,Sneakers,Casual Shoes,Heeled Shoes,Sports Wear")
         val personalCareList = stringToMutableList("Personal Care","Tooth-brush,Tooth-passe,Floss,Mouthwash,Shaving Cream,Razor Blade, Soap,Fiber,Shampoo,Hair Conditioner,Brush,Comb,Hair Dryer,Curling Iron,Hai moulder,Hair clip, Moisturizer,Lip Cream, Contact Lens,Perfume,Deodorant,Makeup Materials,Makeup Remover,Wet Wipes,Pad,Ear Stick,Cotton,Nail Polish,Nail Polish Remover,Tweezers,Nail Scissors,Nail Files,Suntan cream")

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.ProfileFragment
-import vault.voyage.app.panelFragments.SelectedItemsFragment
+import vault.voyage.app.panelFragments.selectedItemsFragment.SelectedItemsFragment
 import vault.voyage.app.panelFragments.todoFragment.TodoFragment
 import vault.voyage.app.panelFragments.bagFragment.BagFragment
 
