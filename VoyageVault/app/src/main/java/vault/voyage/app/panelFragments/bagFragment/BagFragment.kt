@@ -46,15 +46,15 @@ class BagFragment(val user: User) : Fragment() {
 
 
         val items = arrayListOf<BagItem>(
-            BagItem(R.drawable.clothing,"Clothing", clothingList, R.color.bag_Clothing),
-            BagItem(R.drawable.personal_care,"Personal Care", personalCareList,Color.rgb(217,242,255)),
-            BagItem(R.drawable.baby_needs,"Baby Needs", babyNeedsList,Color.rgb(255,255,209)),
-            BagItem(R.drawable.health,"Health", healthList,Color.rgb(208,255,209)),
-            BagItem(R.drawable.technology,"Technology", technologyList,Color.rgb(208,255,142)),
-            BagItem(R.drawable.food,"Food", foodList,Color.rgb(252,228,149)),
-            BagItem(R.drawable.beach_supplies,"Beach Supplies", beachSuppliesList,Color.rgb(173,247,240)),
-            BagItem(R.drawable.car_supplies,"Car Supplies", carSuppliesList,Color.rgb(217,255,240)),
-            BagItem(R.drawable.needs,"Needs", needsList,Color.rgb(216,247,216)),
+            BagItem(R.drawable.clothing,"Clothing", clothingList, ),
+            BagItem(R.drawable.personal_care,"Personal Care", personalCareList),
+            BagItem(R.drawable.baby_needs,"Baby Needs", babyNeedsList),
+            BagItem(R.drawable.health,"Health", healthList),
+            BagItem(R.drawable.technology,"Technology", technologyList),
+            BagItem(R.drawable.food,"Food", foodList),
+            BagItem(R.drawable.beach_supplies,"Beach Supplies",beachSuppliesList),
+            BagItem(R.drawable.car_supplies,"Car Supplies",carSuppliesList),
+            BagItem(R.drawable.needs,"Needs", needsList)
         )
         bag_recyclerview.adapter = BagItemsAdapter(context, activity as AppCompatActivity,items,user)
 

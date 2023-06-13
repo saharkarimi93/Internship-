@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import vault.voyage.app.PanelActivity
 import vault.voyage.app.R
+import vault.voyage.app.model.SelectedItem
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.selectedItemsFragment.recyclerview.SelectedItemsAdapter
+import kotlin.streams.toList
 
 class SelectedItemsFragment(val user: User) : Fragment() {
 
@@ -38,21 +40,23 @@ BagItem(R.drawable.clothing,"Clothing", clothingList, R.color.bag_Clothing),
         val recyclerview:RecyclerView = view.findViewById(R.id.categories_recyclerView)
         recyclerview.layoutManager = GridLayoutManager(context,3)
         val categories: List<Category> = listOf(
-            Category("Clothing",R.drawable.clothing),
-            Category("Personal Care",R.drawable.personal_care),
-            Category("Baby Needs",R.drawable.baby_needs),
-            Category("Health",R.drawable.health),
-            Category("Technology",R.drawable.technology),
-            Category("Food",R.drawable.food),
-            Category("Beach Supplies",R.drawable.beach_supplies),
-            Category("Car Supplies",R.drawable.car_supplies),
-            Category("Needs",R.drawable.needs)
+            Category("Clothing",R.drawable.clothing,filterUserBagList("Clothing")),
+            Category("Personal Care",R.drawable.personal_care,filterUserBagList("Personal Care")),
+            Category("Baby Needs",R.drawable.baby_needs,filterUserBagList("Baby Needs")),
+            Category("Health",R.drawable.health,filterUserBagList("Health")),
+            Category("Technology",R.drawable.technology,filterUserBagList("Technology")),
+            Category("Food",R.drawable.food,filterUserBagList("Food")),
+            Category("Beach Supplies",R.drawable.beach_supplies,filterUserBagList("Beach Supplies")),
+            Category("Car Supplies",R.drawable.car_supplies,filterUserBagList("Car Supplies")),
+            Category("Needs",R.drawable.needs,filterUserBagList("Needs"))
         )
         recyclerview.adapter = SelectedItemsAdapter(context,user,categories)
 
 
         return view
     }
-
+    fun filterUserBagList(category:String):MutableSet<SelectedItem>{
+        return user.userBag.stream().filter { e-> e.category == category }.toList().toMutableSet()
+    }
 
 }
