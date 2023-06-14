@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,13 +51,13 @@ BagItem(R.drawable.clothing,"Clothing", clothingList, R.color.bag_Clothing),
             Category("Car Supplies",R.drawable.car_supplies,filterUserBagList("Car Supplies")),
             Category("Needs",R.drawable.needs,filterUserBagList("Needs"))
         )
-        recyclerview.adapter = SelectedItemsAdapter(context,user,categories)
+        recyclerview.adapter = SelectedItemsAdapter(activity as AppCompatActivity,context,user,categories)
 
 
         return view
     }
-    fun filterUserBagList(category:String):MutableSet<SelectedItem>{
-        return user.userBag.stream().filter { e-> e.category == category }.toList().toMutableSet()
+    private fun filterUserBagList(category:String):MutableList<SelectedItem>{
+        return user.userBag.stream().filter { e-> e.category == category }.toList().toMutableList()
     }
 
 }

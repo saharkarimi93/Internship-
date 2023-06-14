@@ -46,6 +46,7 @@ class BagSelectedItemAdapter(
                 }
                 R.id.delete_selected_item_menuItem->{
                     items.remove(currentItem)
+                    user.userBag.remove(currentItem)
                     Toast.makeText(context,"Item Deleted Successfully!",Toast.LENGTH_SHORT).show()
 
                     notifyDataSetChanged()

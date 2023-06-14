@@ -1,7 +1,7 @@
 package vault.voyage.app.model
 
 class Task(val description:String) {
-     private var done:Boolean = false
+    private var done:Boolean = false
 
     fun doneTask(){
         done = true
