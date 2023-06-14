@@ -29,30 +29,30 @@
             android:hint="Description" />
 
     </com.google.android.material.textfield.TextInputLayout>
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:gravity="center"
-       >
-       <com.google.android.material.button.MaterialButton
-           android:layout_width="wrap_content"
-           android:layout_height="50dp"
-           android:layout_marginRight="10dp"
-           style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-           android:text="Cancel"
-           app:strokeColor="@color/button"
-           android:textColor="@color/button"
-           app:cornerRadius="2dp"
-           />
-       <com.google.android.material.button.MaterialButton
-           android:layout_width="wrap_content"
-           android:layout_height="50dp"
-           android:text="Add Task"
-           android:backgroundTint="@color/button"
-           app:cornerRadius="2dp"
-           />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="Cancel"
+            app:strokeColor="@color/button"
+            android:textColor="@color/button"
+            app:cornerRadius="2dp"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Add Task"
+            android:backgroundTint="@color/button"
+            app:cornerRadius="2dp"
+            />
 
-   </LinearLayout>
+    </LinearLayout>
 
 
 
