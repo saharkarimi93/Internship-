@@ -55,7 +55,7 @@ class TodoFragment(user: User) : Fragment() {
         adapter = TasksAdapter(context,items.getTasks(),user,activity)
         todoItems_recyclerView.adapter =adapter
         addButton.setOnClickListener {
-            if(!todo_editText.text.isEmpty()){
+            if(todo_editText.text.isNotEmpty()){
                 items.getTasks().add(0, Task(todo_editText.text.toString()))
 
                 todo_editText.text.clear()

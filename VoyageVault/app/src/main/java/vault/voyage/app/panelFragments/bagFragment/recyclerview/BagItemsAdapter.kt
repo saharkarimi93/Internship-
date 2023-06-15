@@ -1,6 +1,7 @@
 package vault.voyage.app.panelFragments.bagFragment.recyclerview
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import vault.voyage.app.EmptyActivity
+import vault.voyage.app.PanelActivity
 import vault.voyage.app.R
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.bagFragment.bagSelectedItem.BagSelectedItemFragment
@@ -42,7 +45,13 @@ class BagItemsAdapter(
         holder.image.setImageResource(currentItem.image)
         holder.bag_list_item.setBackgroundColor(currentItem.color)
         holder.bag_list_item.setOnClickListener {
-            switchFragment(BagSelectedItemFragment(currentItem.items,user))
+            if(currentItem.items.isEmpty()){
+                Intent(context,EmptyActivity::class.java).also {
+                    context?.startActivity(it)
+                }
+            }else {
+                switchFragment(BagSelectedItemFragment(currentItem.items, user))
+            }
         }
 
     }
