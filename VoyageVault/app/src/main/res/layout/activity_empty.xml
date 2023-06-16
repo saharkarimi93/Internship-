@@ -19,6 +19,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
+            tools:src="@drawable/nothing_found"
             />
         <TextView
             android:layout_width="match_parent"
