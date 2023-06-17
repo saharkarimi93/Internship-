@@ -25,13 +25,19 @@ class ProfileFragment(val user: User) : Fragment() {
         val email = view.findViewById<EditText>(R.id.profile_email)
         val password = view.findViewById<EditText>(R.id.profile_password)
         val number = view.findViewById<EditText>(R.id.profile_number)
-
         username.setText(user.username)
         firstname.setText(user.firstname)
         lastname.setText(user.lastname)
         email.setText(user.email)
         number.setText(user.number)
         password.setText(user.password)
+
+        username.isEnabled = false
+        firstname.isEnabled = false
+        lastname.isEnabled = false
+        number.isEnabled = false
+        password.isEnabled = false
+        email.isEnabled = false
 
 
 
