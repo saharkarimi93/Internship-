@@ -3,10 +3,22 @@ package vault.voyage.app.model
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 
-class User(firstname:String,lastname:String,email:String, number:String){
+class User(
+    username:String,
+    firstname:String,
+    lastname:String,
+    email:String,
+    password:String,
+    number:String){
     var todoList = Todo()
     var userBag:MutableSet<SelectedItem> = mutableSetOf()
-    var name = firstname
+    var username = username
+        get() = field
+        set(value) {field=value}
+    var password = password
+        get() = field
+        set(value) {field=value}
+    var firstname = firstname
         get() = field
         set(value) {field = value}
     var lastname = lastname

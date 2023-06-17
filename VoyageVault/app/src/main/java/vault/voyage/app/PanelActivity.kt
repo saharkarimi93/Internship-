@@ -12,7 +12,7 @@ import vault.voyage.app.panelFragments.bagFragment.BagFragment
 
 class PanelActivity : AppCompatActivity() {
     companion object{
-        @JvmStatic val user = User("sahar karimi","saharkarimi@gmail.com","+123456789")
+        @JvmStatic val user = User("saharkarimi","sahar","karimi","saharkarimi@gmail.com","12345678","+123456789")
     }
     private val profile = ProfileFragment(user)
     private val bag = BagFragment(user)
