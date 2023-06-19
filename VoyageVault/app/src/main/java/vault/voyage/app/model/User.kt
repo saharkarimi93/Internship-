@@ -37,7 +37,7 @@ class User(
     var number = number
         get() = field
         set(value) {
-            val pattern = Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}\$")
+            val pattern = Regex(" ^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}\$ ")
             if(value.toString().length==10 && pattern.matches(value)){
 
                 field = value
