@@ -31,32 +31,24 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:gravity="center"
+        android:gravity="right"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="5dp"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/todo_editText"
-                android:layout_width="280dp"
-                android:layout_height="50dp"
-                android:hint="Task" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_todo_button"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addTaskFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/button"
-            android:text="Add"
-            app:cornerRadius="5dp" />
+            android:text="Add Task"
+            android:textColor="#ffffff"
+            app:icon="@drawable/add_task"
+
+
+            />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

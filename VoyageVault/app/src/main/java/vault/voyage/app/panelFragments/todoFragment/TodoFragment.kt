@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vault.voyage.app.PanelActivity.Companion.user
 import vault.voyage.app.R
 import vault.voyage.app.model.Task
@@ -49,20 +51,13 @@ class TodoFragment(user: User) : Fragment() {
         activity.setSupportActionBar(todoToolbar)
 
         val todoItems_recyclerView:RecyclerView = view.findViewById(R.id.todo_items_recyclerview)
-        val addButton:Button = view.findViewById(R.id.add_todo_button)
-        val todo_editText:EditText = view.findViewById(R.id.todo_editText)
+//        val addButton:Button = view.findViewById(R.id.add_todo_button)
+//        val todo_editText:EditText = view.findViewById(R.id.todo_editText)
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = TasksAdapter(context,items.getTasks(),user,activity)
         todoItems_recyclerView.adapter =adapter
-        addButton.setOnClickListener {
-            if(todo_editText.text.isNotEmpty()){
-                items.getTasks().add(0, Task(todo_editText.text.toString()))
+        var addTaskFab = view.findViewById<ExtendedFloatingActionButton>(R.id.addTaskFab)
 
-                todo_editText.text.clear()
-                Toast.makeText(context,"New Todo Item Added",Toast.LENGTH_LONG).show()
-                adapter.notifyDataSetChanged()
-            }
-        }
         return view
     }
 
