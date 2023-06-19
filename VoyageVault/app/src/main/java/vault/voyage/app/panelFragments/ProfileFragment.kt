@@ -1,5 +1,7 @@
 package vault.voyage.app.panelFragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import vault.voyage.app.R
+import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.model.EditActivator
 import vault.voyage.app.model.EditStatus
@@ -81,14 +84,16 @@ class ProfileFragment(val user: User) : Fragment() {
 //        TODO("Edit Is Not Working... Just works for enabling textfields")
         val listener:View.OnClickListener = View.OnClickListener {
             if(edit.editActivated){
+                var exceptionThrown = false
                 if(editText.text.isNotEmpty()){
                     when(editStatus){
                         EditStatus.USERNAME-> user.username = editText.text.toString()
                         EditStatus.EMAIL-> {
                             try{
                                 user.email = editText.text.toString()
-                            }catch (ex:InvalidPhoneNumber){
-                                Toast.makeText(context, "Email is Invalid.Valid Form:example@example.com", Toast.LENGTH_SHORT).show()
+                            }catch (ex:InvalidEmailException){
+                                makeDialog("Email is Invalid.Valid Form:example@example.com")
+                                exceptionThrown = true
                             }
                         }
                         EditStatus.PASSWORD-> user.password = editText.text.toString()
@@ -98,7 +103,8 @@ class ProfileFragment(val user: User) : Fragment() {
                             try{
                                 user.number = editText.text.toString()
                             }catch (ex:InvalidPhoneNumber){
-                                Toast.makeText(context, "Number is Invalid. Valid Forms: +919367788755,8989829304,+16308520397,786-307-3615", Toast.LENGTH_SHORT).show()
+                                makeDialog("Number is Invalid. Valid Forms: +999999999999 or Any number between 7 to 14 character")
+                                exceptionThrown = true
                             }
                         }
                         else -> {}
@@ -106,7 +112,9 @@ class ProfileFragment(val user: User) : Fragment() {
                     setAllChanges()
                     edit.editActivated = !edit.editActivated
                     editText.isEnabled = false;
-                    Toast.makeText(context, "$editStatus Edited", Toast.LENGTH_SHORT).show()
+                    if(!exceptionThrown){
+                        Toast.makeText(context, "$editStatus Edited", Toast.LENGTH_SHORT).show()
+                    }
                 }else{
                     editText.isEnabled = false
                     edit.editActivated = !edit.editActivated
@@ -121,5 +129,15 @@ class ProfileFragment(val user: User) : Fragment() {
 
 
         return listener
+    }
+    private fun makeDialog(dialogText:String){
+        val builder:AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setMessage(dialogText)
+        builder.setTitle("Error")
+        builder.setNegativeButton("Ok"){dialog,which->
+            dialog.cancel()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }
