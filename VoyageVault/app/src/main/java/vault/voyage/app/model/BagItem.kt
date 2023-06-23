@@ -1,4 +1,4 @@
-package vault.voyage.app.panelFragments.bagFragment.recyclerview
+package vault.voyage.app.model
 
 import android.graphics.Color
 import vault.voyage.app.model.SelectedItem

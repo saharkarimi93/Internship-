@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.EmptyActivity
-import vault.voyage.app.PanelActivity
 import vault.voyage.app.R
+import vault.voyage.app.model.BagItem
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.bagFragment.bagSelectedItem.BagSelectedItemFragment
 

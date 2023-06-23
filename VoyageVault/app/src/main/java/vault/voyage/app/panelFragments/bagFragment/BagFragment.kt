@@ -1,6 +1,5 @@
 package vault.voyage.app.panelFragments.bagFragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
 import vault.voyage.app.model.User
 import vault.voyage.app.model.SelectedItem
-import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItem
+import vault.voyage.app.model.BagItem
 import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItemsAdapter
 import kotlin.streams.toList
 

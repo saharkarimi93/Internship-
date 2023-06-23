@@ -1,6 +1,6 @@
 package vault.voyage.app.model
 
-enum class EditStatus(val name_:String) {
+enum class EditStatus(private val status:String) {
     USERNAME("Username"),
     PASSWORD("Password"),
     EMAIL("Email"),
@@ -9,7 +9,7 @@ enum class EditStatus(val name_:String) {
     NUMBER("Number");
 
     override fun toString(): String {
-        return name_
+        return status
     }
 
 

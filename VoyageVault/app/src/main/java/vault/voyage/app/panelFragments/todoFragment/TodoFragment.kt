@@ -123,6 +123,4 @@ class TodoFragment(user: User) : Fragment() {
         return true
 
     }
-
-
 }
