@@ -10,10 +10,8 @@ import vault.voyage.app.panelFragments.selectedItemsFragment.SelectedItemsFragme
 import vault.voyage.app.panelFragments.todoFragment.TodoFragment
 import vault.voyage.app.panelFragments.bagFragment.BagFragment
 
-class PanelActivity : AppCompatActivity() {
-    companion object{
-        @JvmStatic val user = User("saharkarimi","sahar","karimi","saharkarimi@gmail.com","12345678","+123456789")
-    }
+class PanelActivity(user: User) : AppCompatActivity() {
+
     private val profile = ProfileFragment(user)
     private val bag = BagFragment(user)
     private val todo = TodoFragment(user)
@@ -27,9 +25,9 @@ class PanelActivity : AppCompatActivity() {
         switchFragment(bag)
         bottom_nav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.mybag_menuItem -> switchFragment(selectedItems)
-                R.id.todo_menuItem -> switchFragment(todo)
                 R.id.backpack_menuItem->switchFragment(bag)
+                R.id.todo_menuItem -> switchFragment(todo)
+                R.id.mybag_menuItem -> switchFragment(selectedItems)
                 R.id.profile_menuItem->switchFragment(profile)
                 else -> {false}
             }

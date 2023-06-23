@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import vault.voyage.app.PanelActivity.Companion.user
 import vault.voyage.app.R
 import vault.voyage.app.model.Task
 import vault.voyage.app.model.Todo
@@ -28,7 +27,7 @@ import vault.voyage.app.panelFragments.todoFragment.completetasks.CompletedTaskF
 import vault.voyage.app.panelFragments.todoFragment.recyclerview.TasksAdapter
 
 
-class TodoFragment(user: User) : Fragment() {
+class TodoFragment(var user: User) : Fragment() {
     var completedItems_fragment:Fragment = CompletedTaskFragment(user.todoList)
     private var items: Todo = user.todoList
     private lateinit var adapter: TasksAdapter
