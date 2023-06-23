@@ -1,6 +1,6 @@
 package vault.voyage.app.model
 
-class Task(val description:String) {
+class Task(val title:String, val description:String) {
     private var done:Boolean = false
 
     fun doneTask(){

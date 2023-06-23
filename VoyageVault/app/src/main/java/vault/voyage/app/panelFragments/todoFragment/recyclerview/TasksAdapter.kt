@@ -37,6 +37,7 @@ class TasksAdapter (
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: TasksAdapter.ViewHolder, position: Int) {
         val currentItem = items[position]
+        holder.title.text = currentItem.title
         holder.desc.text = currentItem.description
         val menu:PopupMenu = PopupMenu(context,holder.options)
         activity.menuInflater.inflate(R.menu.task_menu,menu.menu)

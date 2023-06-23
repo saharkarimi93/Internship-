@@ -81,7 +81,6 @@ class ProfileFragment(val user: User) : Fragment() {
     }
 
     private fun editTexts( edit:EditActivator,editText:EditText,editStatus:EditStatus):View.OnClickListener{
-//        TODO("Edit Is Not Working... Just works for enabling textfields")
         val listener:View.OnClickListener = View.OnClickListener {
             if(edit.editActivated){
                 var exceptionThrown = false

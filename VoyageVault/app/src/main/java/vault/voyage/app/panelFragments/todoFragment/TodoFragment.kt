@@ -1,6 +1,7 @@
 package vault.voyage.app.panelFragments.todoFragment
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vault.voyage.app.PanelActivity.Companion.user
 import vault.voyage.app.R
 import vault.voyage.app.model.Task
@@ -51,13 +51,44 @@ class TodoFragment(user: User) : Fragment() {
         activity.setSupportActionBar(todoToolbar)
 
         val todoItems_recyclerView:RecyclerView = view.findViewById(R.id.todo_items_recyclerview)
-//        val addButton:Button = view.findViewById(R.id.add_todo_button)
-//        val todo_editText:EditText = view.findViewById(R.id.todo_editText)
+
+
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = TasksAdapter(context,items.getTasks(),user,activity)
         todoItems_recyclerView.adapter =adapter
         var addTaskFab = view.findViewById<ExtendedFloatingActionButton>(R.id.addTaskFab)
+        addTaskFab.setOnClickListener{
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_todo,null)
+            val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context).setTitle("Lets Add New Task!").setView(dialogView)
 
+            val alertDialog = dialogBuilder.show()
+
+            val addTask = dialogView.findViewById<Button>(R.id.add_task_button)
+            val cancel = dialogView.findViewById<Button>(R.id.cancel_add_task)
+            val title_dialog = dialogView.findViewById<EditText>(R.id.task_title_dialog)
+            val desc_dialog = dialogView.findViewById<EditText>(R.id.task_desc_dialog)
+            cancel.setOnClickListener {
+                alertDialog.dismiss()
+            }
+            addTask.setOnClickListener {
+                val task_title = title_dialog.text.toString()
+                val task_desc = desc_dialog.text.toString()
+                val newTask = Task(task_title,task_desc)
+                if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
+                    user.todoList.getTasks().add(newTask)
+                    adapter.notifyDataSetChanged()
+                    alertDialog.dismiss()
+                }else{
+                    if(task_title.isEmpty() && task_desc.isEmpty()){
+                        Toast.makeText(context,"All Fields Are Empty",Toast.LENGTH_SHORT).show()
+                    }else if(task_desc.isEmpty()){
+                        Toast.makeText(context,"Description Field is Empty",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context,"Title Field is Empty",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
         return view
     }
 

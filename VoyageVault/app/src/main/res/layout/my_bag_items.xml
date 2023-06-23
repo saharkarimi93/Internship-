@@ -8,27 +8,27 @@
     android:layout_height="100dp"
     android:layout_width="120dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        >
+        <ImageView
+            android:id="@+id/item_image_mybag"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            />
+        <TextView
+            android:id="@+id/item_category_mybag"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Item Category"
             android:gravity="center"
-            android:layout_margin="5dp"
-            >
-            <ImageView
-                android:id="@+id/item_image_mybag"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-               />
-            <TextView
-                android:id="@+id/item_category_mybag"
-                android:layout_marginTop="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Item Category"
-                android:gravity="center"
-                />
-        </LinearLayout>
+            />
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

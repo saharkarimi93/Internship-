@@ -25,6 +25,7 @@ class CompletedTaskAdapter (val context: Context?, var items:Todo): RecyclerView
     override fun onBindViewHolder(holder: CompletedTaskAdapter.ViewHolder, position: Int) {
         val currentItem = items.getDoneTasks()[position]
         holder.desc.text = currentItem.description
+        holder.title.text = currentItem.title
         holder.restore.setOnClickListener {
             items.restore(position)
             notifyDataSetChanged()
