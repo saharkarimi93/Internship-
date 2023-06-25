@@ -16,7 +16,9 @@ import vault.voyage.app.exceptions.LoginFailedException
 import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
-    var users = UsersControl()
+    companion object{
+        @JvmStatic var users = UsersControl()
+    }
     private var layout:ConstraintLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
