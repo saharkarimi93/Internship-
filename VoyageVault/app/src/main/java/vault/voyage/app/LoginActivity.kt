@@ -7,15 +7,21 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.snackbar.Snackbar
+import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.LoginFailedException
+import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
     var users = UsersControl()
+    private var layout:ConstraintLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
-
+        layout = findViewById(R.id.login_constraintLayout)
         //TEST
         users.register("sahar","sahar","karimi","saharkarimi@gmail.com","12345","+123456789")
 
@@ -35,8 +41,15 @@ class LoginActivity : AppCompatActivity() {
                 val panelActivity = Intent(this,PanelActivity::class.java)
 
                 startActivity(panelActivity)
-            }catch (ex:LoginFailedException){
-                throw ex
+            }catch (ex:Exception){
+                when(ex){
+                    is LoginFailedException->{
+                        var snack = Snackbar.make(layout!!,"Login Failed. Try Again",Snackbar.LENGTH_SHORT)
+                        snack.setAction("OK"){
+                        }
+                        snack.show()
+                    }
+                }
             }
 
         }

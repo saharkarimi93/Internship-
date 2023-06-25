@@ -55,7 +55,10 @@ class UsersControl {
     fun login(username:String, password:String): User? {
         if(searchUser(username) !=null){
             var user = searchUser(username)!!
-            if(user.password.equals(password,ignoreCase = false)){
+            Log.d("LOGGED IN USERNAME:","${user.username} , ${user.password}")
+            Log.d("LOGIN VALUES:","${username} , ${password}")
+            Log.d("PASSWORD EQUALITY:","${user.password==password}")
+            if(user.password == password){
                 return user
             }else{
                 throw LoginFailedException("Password is Wrong")

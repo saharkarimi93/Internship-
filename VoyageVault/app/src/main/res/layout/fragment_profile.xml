@@ -37,15 +37,15 @@
                     android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <ImageButton
                 android:id="@+id/profile_edit_username"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:scaleType="fitCenter"
-                android:background="@drawable/edit"
-                tools:src="@drawable/edit"
                 android:layout_marginLeft="5dp"
-                />
+                android:background="@drawable/edit"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/edit" />
         </LinearLayout>
 
         <LinearLayout
