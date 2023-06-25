@@ -27,11 +27,13 @@ class LoginActivity : AppCompatActivity() {
         val password:EditText = findViewById(R.id.password_login)
         login.setOnClickListener{
             var username_input = username.text.toString()
-            var password_input = username.text.toString()
+            var password_input = password.text.toString()
             try{
                 val loggedInUser = users.login(username_input,password_input)!!
                 Log.d("LOGIN TEST LOG:", (loggedInUser==null).toString())
-                val panelActivity = Intent(this,PanelActivity(loggedInUser)::class.java)
+                PanelActivity.user = loggedInUser
+                val panelActivity = Intent(this,PanelActivity::class.java)
+
                 startActivity(panelActivity)
             }catch (ex:LoginFailedException){
                 throw ex

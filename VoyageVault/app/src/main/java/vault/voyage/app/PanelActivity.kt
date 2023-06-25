@@ -10,15 +10,24 @@ import vault.voyage.app.panelFragments.selectedItemsFragment.SelectedItemsFragme
 import vault.voyage.app.panelFragments.todoFragment.TodoFragment
 import vault.voyage.app.panelFragments.bagFragment.BagFragment
 
-class PanelActivity(user: User) : AppCompatActivity() {
-
-    private val profile = ProfileFragment(user)
-    private val bag = BagFragment(user)
-    private val todo = TodoFragment(user)
-    private val selectedItems = SelectedItemsFragment(user)
+class PanelActivity : AppCompatActivity() {
+    companion object{
+        @JvmStatic
+        lateinit var user:User
+    }
+    private lateinit var profile:ProfileFragment
+    private lateinit var bag:BagFragment
+    private lateinit var todo :TodoFragment
+    private lateinit var selectedItems:SelectedItemsFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.panel_activity)
+
+
+        profile = ProfileFragment(user)
+        bag = BagFragment(user)
+        todo = TodoFragment(user)
+        selectedItems = SelectedItemsFragment(user)
 
 
         val bottom_nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
