@@ -1,6 +1,7 @@
 package vault.voyage.app
 
 import android.util.Log
+import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.exceptions.LoginFailedException
@@ -18,7 +19,11 @@ class UsersControl {
         password:String,
         number:String
     ){
+        if(username.isEmpty() || firstname.isEmpty()||lastname.isEmpty()||email.isEmpty()||password.isEmpty()||number.isEmpty()){
+            throw EmptyFieldsException("Some Fields Are Empty While Registering")
+        }
         if(searchUser(username)!=null){
+            Log.d("REGISTER FAILED",searchUser(username)!!.username)
             throw RegisterFailedException("Register Failed. User Exists Already")
         }
         var registeredUser = User()
@@ -42,12 +47,11 @@ class UsersControl {
     }
 
     private fun searchUser(username:String): User? {
-        usersList.forEach{
-                e-> run {
-            if (e.username.equals(username, ignoreCase = true))
-                Log.d("Search USER LOG:","user is available")
-            return e
-        }
+        for(i in usersList){
+            if (i.username.equals(username, ignoreCase = true)) {
+                Log.d("Search USER LOG:", "user is available: ${i.username}")
+                return i
+            }
         }
         return null
     }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".SignUpActivity"
+    android:id="@+id/signup_constraintLayout">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
@@ -19,7 +20,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username_input"
+            android:id="@+id/signup_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username" />
@@ -48,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstname_input"
+                android:id="@+id/signup_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="firstname" />
@@ -64,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastname_input"
+                android:id="@+id/signup_lastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="last name" />
@@ -85,7 +86,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_input"
+            android:id="@+id/signup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -105,7 +106,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_input"
+            android:id="@+id/signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email" />
@@ -125,11 +126,11 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phonenumber_input"
+            android:id="@+id/signup_phonenumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone Number"
-            android:inputType="number"
+            android:inputType="phone"
             android:maxLength="11" />
     </com.google.android.material.textfield.TextInputLayout>
 
