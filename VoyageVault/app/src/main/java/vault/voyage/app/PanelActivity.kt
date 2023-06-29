@@ -9,6 +9,7 @@ import vault.voyage.app.panelFragments.ProfileFragment
 import vault.voyage.app.panelFragments.selectedItemsFragment.SelectedItemsFragment
 import vault.voyage.app.panelFragments.todoFragment.TodoFragment
 import vault.voyage.app.panelFragments.bagFragment.BagFragment
+import vault.voyage.app.panelFragments.nearmeFragment.NearMeFragment
 
 class PanelActivity : AppCompatActivity() {
     companion object{
@@ -19,6 +20,7 @@ class PanelActivity : AppCompatActivity() {
     private lateinit var bag:BagFragment
     private lateinit var todo :TodoFragment
     private lateinit var selectedItems:SelectedItemsFragment
+    private lateinit var nearMe:NearMeFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.panel_activity)
@@ -28,7 +30,7 @@ class PanelActivity : AppCompatActivity() {
         bag = BagFragment(user)
         todo = TodoFragment(user)
         selectedItems = SelectedItemsFragment(user)
-
+        nearMe = NearMeFragment(user)
 
         val bottom_nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         switchFragment(bag)
@@ -38,6 +40,7 @@ class PanelActivity : AppCompatActivity() {
                 R.id.todo_menuItem -> switchFragment(todo)
                 R.id.mybag_menuItem -> switchFragment(selectedItems)
                 R.id.profile_menuItem->switchFragment(profile)
+                R.id.nearMe_menuItem -> switchFragment(nearMe)
                 else -> {false}
             }
         }

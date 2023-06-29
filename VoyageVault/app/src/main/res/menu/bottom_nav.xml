@@ -14,6 +14,11 @@
         android:title="My Bag"
         android:icon="@drawable/select_item"/>
     <item
+        android:id="@+id/nearMe_menuItem"
+        android:title="Near Me"
+        android:icon="@drawable/map_item"/>
+
+    <item
         android:id="@+id/profile_menuItem"
         android:title="Profile"
         android:icon="@drawable/profile_item"/>
