@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VoyageVault"
         tools:targetApi="31">
+
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
         <activity
             android:name=".panelFragments.todoFragment.TaskFullInformation"
             android:exported="false" />
@@ -32,8 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmptyActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".EmptyActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
