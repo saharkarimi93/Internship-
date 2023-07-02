@@ -30,7 +30,7 @@ class PanelActivity : AppCompatActivity() {
         bag = BagFragment(user)
         todo = TodoFragment(user)
         selectedItems = SelectedItemsFragment(user)
-        nearMe = NearMeFragment(user)
+        nearMe = NearMeFragment(this,user)
 
         val bottom_nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         switchFragment(bag)

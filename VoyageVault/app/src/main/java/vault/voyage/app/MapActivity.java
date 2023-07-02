@@ -14,16 +14,19 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "MapActivity";
-    private static final int ERROR_DIALOG_REQUEST = 9001;
+
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE =1234;
 
     private Boolean mLocationPermissionsGranted = false;
+    private GoogleMap mMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,11 @@ public class MapActivity extends AppCompatActivity {
 
     }
 
+    private void initMap(){
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(MapActivity.this);
+        getLocationPermission();
+    }
 
     private void getLocationPermission(){
         String[] permissions ={
@@ -53,8 +61,7 @@ public class MapActivity extends AppCompatActivity {
         mLocationPermissionsGranted = false;
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0) {
                     for (int i = 0; i < grantResults.length; i++) {
                         if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
                             mLocationPermissionsGranted = false;
@@ -63,24 +70,17 @@ public class MapActivity extends AppCompatActivity {
                     }
                     mLocationPermissionsGranted = true;
                     //init map
+                    initMap();
                 }
             }
         }
     }
 
-    public boolean isServicesOK(){
-        Log.d(TAG, "isServicesOK: checking google services version");
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MapActivity.this);
-        if(available== ConnectionResult.SUCCESS){
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-            return true;
-        }else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MapActivity.this,available,ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(this,"We can't make map requsts",Toast.LENGTH_SHORT).show();
-        }
-        return false;
+
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        Toast.makeText(this,"Map is Ready",Toast.LENGTH_SHORT).show();
+        mMap = googleMap;
     }
 }

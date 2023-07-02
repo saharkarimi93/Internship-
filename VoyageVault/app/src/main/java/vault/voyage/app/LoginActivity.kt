@@ -37,9 +37,9 @@ class LoginActivity : AppCompatActivity() {
             var username_input = username.text.toString()
             var password_input = password.text.toString()
             try{
-                val loggedInUser = users.login(username_input,password_input)!!
+                val loggedInUser = users.login("sahar","12345")!!//(username_input,password_input)!!
                 Log.d("LOGIN TEST LOG:", (loggedInUser==null).toString())
-                PanelActivity.user = loggedInUser
+                PanelActivity.user = loggedInUser // loggedInUser
                 val panelActivity = Intent(this,PanelActivity::class.java)
 
                 startActivity(panelActivity)

@@ -1,18 +1,23 @@
 package vault.voyage.app.panelFragments.nearmeFragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import vault.voyage.app.R
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.nearmeFragment.recyclerview.NearMeAdapter
 
-class NearMeFragment(val user: User) : Fragment() {
+class NearMeFragment(val c: Context, val user: User) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,7 +43,8 @@ class NearMeFragment(val user: User) : Fragment() {
             NearMeItem(R.drawable.near_me_park,"Park"),
             NearMeItem(R.drawable.near_me_bank,"Bank"),
         )
-        nearMeRecyclerview.adapter = NearMeAdapter(activity as AppCompatActivity?,context,user,places)
+        nearMeRecyclerview.adapter = NearMeAdapter(activity as AppCompatActivity,c,user,places)
         return view
     }
+
 }
