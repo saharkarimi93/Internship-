@@ -1,6 +1,7 @@
 package vault.voyage.app
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -43,10 +44,10 @@ class CurrencyConverterActivity : AppCompatActivity() {
     }
     private fun getApiResult(){
         if(firstConversion.text.isNotEmpty() && firstConversion.text.isNotBlank()){
-            val API = "https://api.exchangeratesapi.io/v1/2013-12-2n" +
-                    "? access_key = b476714b3885e9427fe988fcecc2a412" +
-                    "& base = " + baseCurrency
-            "& symbols = " + convertedToCurrency
+            val API = "http://api.exchangeratesapi.io/v1/latest" +
+                    "?access_key=b476714b3885e9427fe988fcecc2a412" +
+                    "&base=" +baseCurrency
+            "&symbols="+convertedToCurrency
             if(baseCurrency==convertedToCurrency){
                 TODO("SHOW TOAST")
             }else{
@@ -59,10 +60,10 @@ class CurrencyConverterActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main){
                             val text = ((firstConversion.text.toString().toFloat())*conversionRate).toString()
                             secondConversion.setText(text)
-
+                            Log.d("CURRENCY", "getApiResult: "+text)
                         }
                     }catch (e:Exception){
-
+                        Log.d("CURRENY", "getApiResult: "+e.toString())
                     }
                 }
             }
