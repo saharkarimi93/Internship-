@@ -47,6 +47,7 @@ class NearMeAdapter(
         holder.place.text = current.name
         holder.card.setOnClickListener{
             if(isServicesOK){
+                MapActivity.locationToSearch = current.name;
                 Intent(context, MapActivity::class.java).also {
                     context.startActivity(it)
                 }

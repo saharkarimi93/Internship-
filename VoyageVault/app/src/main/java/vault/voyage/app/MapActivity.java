@@ -9,6 +9,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,7 +24,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "MapActivity";
@@ -36,12 +51,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
+    private SupportMapFragment supportMapFragment;
+    private double currentLat,currentLong;
+    public static String locationToSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         getLocationPermission();
+        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"+
+                "?location="+currentLat+","+currentLong+
+                "&radius=5000"+
+                "&types="+locationToSearch+
+                "&sensor=true"+
+                "&key="+getResources().getString(R.string.google_maps_API_Key);
+
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
@@ -56,13 +80,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         try {
             if (mLocationPermissionsGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
+
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location");
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLatitude()), DEFAULT_ZOOM);
+                            currentLong = currentLocation.getLongitude();
+                            currentLat = currentLocation.getLatitude();
+                            moveCamera(new LatLng(currentLat,currentLong), DEFAULT_ZOOM);
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapActivity.this, "Unable to find current location", Toast.LENGTH_SHORT).show();
@@ -77,8 +104,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initMap() {
-        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(MapActivity.this);
+        supportMapFragment= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(MapActivity.this);
     }
 
     private void getLocationPermission() {
@@ -136,4 +163,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
     }
+
+
 }

@@ -2,11 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_grey">#B4B4B4</color>
     <color name="button">#096BFF</color>
     <color name="bottomNav">#B8D5FF</color>
     <color name="bottomNavItems">#003480</color>
     <color name="todoItems">#BDD7FF</color>
-
     <color name="bag_Clothing">#78B47A</color>
     <color name="bag_personal_care">#C8C8C8</color>
     <color name="bag_baby_needs">#FFC28D</color>

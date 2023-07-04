@@ -230,5 +230,21 @@
                 android:layout_marginLeft="5dp"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/currency_converterButton"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Currency Converter"
+                android:backgroundTint="@color/button"
+                android:textColor="@color/white"
+                style="@style/Widget.MaterialComponents.Button"
+                />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

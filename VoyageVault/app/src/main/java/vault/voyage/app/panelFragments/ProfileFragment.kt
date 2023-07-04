@@ -1,14 +1,18 @@
 package vault.voyage.app.panelFragments
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import vault.voyage.app.CurrencyConverterActivity
+import vault.voyage.app.EmptyActivity
 import vault.voyage.app.R
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
@@ -30,6 +34,7 @@ class ProfileFragment(val user: User) : Fragment() {
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var number: EditText
+    private lateinit var currency_converter: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,7 +53,10 @@ class ProfileFragment(val user: User) : Fragment() {
         email = view.findViewById(R.id.profile_email)
         password = view.findViewById(R.id.profile_password)
         number = view.findViewById(R.id.profile_number)
-
+        currency_converter = view.findViewById(R.id.currency_converterButton)
+        currency_converter.setOnClickListener {
+            Intent(context, CurrencyConverterActivity::class.java).also { context?.startActivity(it) }
+        }
         setAllChanges()
 
         username.isEnabled = false
