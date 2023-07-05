@@ -63,7 +63,7 @@ class CurrencyConverterActivity : AppCompatActivity() {
                             Log.d("CURRENCY", "getApiResult: "+text)
                         }
                     }catch (e:Exception){
-                        Log.d("CURRENY", "getApiResult: "+e.toString())
+                        Log.d("CURRENCY", "getApiResult: "+e.toString())
                     }
                 }
             }
@@ -72,19 +72,34 @@ class CurrencyConverterActivity : AppCompatActivity() {
     private fun spinnerSetup(){
 
 
-        ArrayAdapter.createFromResource(this,
-            R.array.currencies, android.R.layout.simple_spinner_item)
-            .also { adapter->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner_firstConversion.adapter = adapter
+        spinner_firstConversion.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapterview: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                baseCurrency = adapterview?.getItemAtPosition(position).toString()
             }
 
-        ArrayAdapter.createFromResource(this,
-            R.array.currencies2, android.R.layout.simple_spinner_item)
-            .also { adapter->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner_secondConversion.adapter = adapter
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
             }
+
+        }
+        spinner_secondConversion.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapterview: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                convertedToCurrency = adapterview?.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
     }
+
+//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onNothingSelected(p0: AdapterView<*>?) {
+//        TODO("Not yet implemented")
+//    }
 }

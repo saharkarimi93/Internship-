@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/et_firstConversion"
-                        android:layout_width="200dp"
+                        android:layout_width="170dp"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content">
                     </EditText>
@@ -37,6 +37,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <Spinner
                     android:id="@+id/spinner_firstConversion"
+                    android:entries="@array/currencies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/et_secondConversion"
-                        android:layout_width="200dp"
+                        android:layout_width="170dp"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content">
                     </EditText>
@@ -58,6 +59,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <Spinner
                     android:id="@+id/spinner_secondConversion"
+                    android:entries="@array/currencies2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -68,9 +70,12 @@
                 >
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/convert_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="convert"
+                    android:backgroundTint="@color/button"
+                    android:textColor="@color/white"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     />
             </LinearLayout>
         </LinearLayout>
