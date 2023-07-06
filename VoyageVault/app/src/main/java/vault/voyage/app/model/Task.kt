@@ -2,6 +2,7 @@ package vault.voyage.app.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.UUID
 
@@ -14,13 +15,15 @@ data class Task(
     ,@ColumnInfo(name = "task_status") var done:Boolean
 ) {
 
-
+    @Ignore
     fun doneTask(){
         done = true
     }
+    @Ignore
     fun unDoneTask(){
         done = false
     }
+    @Ignore
     fun isDone():Boolean{
         return done
     }

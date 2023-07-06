@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
+import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
@@ -33,8 +35,14 @@ class SignUpActivity : AppCompatActivity() {
             val password_str = password.text.toString()
             val email_str = email.text.toString()
             val phoneNumber_str = phoneNumber.text.toString()
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java,
+                "voyage-vault.db"
+            ).build()
+
             try {
-                LoginActivity.users.register(
+                UsersControl(db).register(
                     userName_str,
                     firstName_str,
                     lastName_str,

@@ -6,15 +6,15 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
-@Entity
+@Entity("users")
 data class User(
-    @PrimaryKey(autoGenerate = false) var username:String,
+    var username:String,   @PrimaryKey(autoGenerate = false)
     var firstname:String,
     var lastname:String,
     var email:String,
     var password:String,
     var number:String){
-
+    @Ignore
     constructor():this("","","","","","")
     @Ignore
     var todoList = Todo()

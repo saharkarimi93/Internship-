@@ -1,16 +1,19 @@
 package vault.voyage.app
 
+import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.exceptions.LoginFailedException
-import vault.voyage.app.exceptions.RegisterFailedException
+import vault.voyage.app.exceptions.UserExistException
 import vault.voyage.app.model.User
-
-class UsersControl {
-    var usersList = mutableListOf<User>()
-
+//TODO Fix This ... Error about Db and context
+class UsersControl(val db:AppDatabase) {
     fun register(
         username:String,
         firstname:String,
@@ -22,10 +25,7 @@ class UsersControl {
         if(username.isEmpty() || firstname.isEmpty()||lastname.isEmpty()||email.isEmpty()||password.isEmpty()||number.isEmpty()){
             throw EmptyFieldsException("Some Fields Are Empty While Registering")
         }
-        if(searchUser(username)!=null){
-            Log.d("REGISTER FAILED",searchUser(username)!!.username)
-            throw RegisterFailedException("Register Failed. User Exists Already")
-        }
+
         var registeredUser = User()
         try{
             registeredUser.setUserEmail(email)
@@ -35,8 +35,15 @@ class UsersControl {
             registeredUser.firstname = firstname
             registeredUser.lastname= lastname
             registeredUser.password = password
-            usersList.add(registeredUser)
-            Log.d("REGISTER LOG:","$username Registered. Size: ${usersList.size}")
+
+            if(userExist(username)){
+                throw UserExistException("User Already Exist")
+            }else {
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.users.updateUser(registeredUser)
+                    Log.d("REGISTER LOG:", "$username Registered. Size: ${db.users.usersAmount()}")
+                }
+            }
         }catch (ex:Exception){
             when(ex){
                 is InvalidPhoneNumber-> throw InvalidPhoneNumber("Invalid Phone Number")
@@ -46,29 +53,23 @@ class UsersControl {
         }
     }
 
-    private fun searchUser(username:String): User? {
-        for(i in usersList){
-            if (i.username.equals(username, ignoreCase = true)) {
-                Log.d("Search USER LOG:", "user is available: ${i.username}")
-                return i
-            }
+    private fun userExist(username:String): Boolean {
+        var b = false
+        CoroutineScope(Dispatchers.IO).launch {
+            b = db.users.countUser(username) == 1
         }
-        return null
+        return b
     }
 
     fun login(username:String, password:String): User? {
-        if(searchUser(username) !=null){
-            var user = searchUser(username)!!
-            Log.d("LOGGED IN USERNAME:","${user.username} , ${user.password}")
-            Log.d("LOGIN VALUES:","${username} , ${password}")
-            Log.d("PASSWORD EQUALITY:","${user.password==password}")
-            if(user.password == password){
-                return user
-            }else{
-                throw LoginFailedException("Password is Wrong")
+        var user:User? = null
+        CoroutineScope(Dispatchers.IO).launch {
+            if (userExist(username)) {
+                user = db.users.loginUser(username, password)
+            } else {
+                throw LoginFailedException("User doesn't exist")
             }
-        }else{
-            throw LoginFailedException("User Doesn't Exist")
         }
+        return user
     }
 }

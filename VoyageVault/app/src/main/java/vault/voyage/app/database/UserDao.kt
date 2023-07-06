@@ -11,7 +11,15 @@ import vault.voyage.app.model.User
 interface UserDao {
     //Inserts new User or updates the exist user
     @Upsert
-    suspend fun upsertUser(user:User)
+    fun updateUser(user:User)
+
+    @Query("SELECT COUNT(*) FROM users where username =:username")
+    fun countUser(username:String):Int
+
+    @Query("SELECT * FROM users where LOWER(username) LIKE LOWER(:username) AND password=:password")
+    fun loginUser(username:String,password:String):User
+    @Query("SELECT COUNT(*) FROM users ")
+    fun usersAmount():Int
 
 
 
