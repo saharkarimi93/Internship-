@@ -72,7 +72,7 @@ class TodoFragment(var user: User) : Fragment() {
             addTask.setOnClickListener {
                 val task_title = title_dialog.text.toString()
                 val task_desc = desc_dialog.text.toString()
-                val newTask = Task(task_title,task_desc)
+                val newTask = Task(user.username,task_title,task_desc,false)
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
                     user.todoList.getTasks().add(newTask)
                     adapter.notifyDataSetChanged()

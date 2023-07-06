@@ -1,11 +1,14 @@
 package vault.voyage.app.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
-
+@Entity
 data class User(
-    var username:String,
-    var firstname:String,
+    var username:String,   @PrimaryKey(autoGenerate = false)
+    var firstname:String,  @ColumnInfo(name = "firstname")
     var lastname:String,
     var email:String,
     var password:String,

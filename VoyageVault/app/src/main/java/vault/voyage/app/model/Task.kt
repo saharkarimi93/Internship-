@@ -1,7 +1,17 @@
 package vault.voyage.app.model
 
-class Task(val title:String, val description:String) {
-    private var done:Boolean = false
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Task(
+    @PrimaryKey
+    val username:String
+    , val title: String
+    , val description:String
+    , var done:Boolean
+) {
 
     fun doneTask(){
         done = true
