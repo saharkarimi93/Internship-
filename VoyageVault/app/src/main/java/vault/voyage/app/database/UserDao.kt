@@ -9,10 +9,10 @@ import vault.voyage.app.model.User
 
 @Dao
 interface UserDao {
-    //updates the exist user
+    //Inserts new User or updates the exist user
     @Upsert
     suspend fun upsertUser(user:User)
-//    @Query()
-//    fun getUser(): User
+
+
 
 }
