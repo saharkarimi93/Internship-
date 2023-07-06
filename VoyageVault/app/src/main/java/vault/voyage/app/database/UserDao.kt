@@ -13,12 +13,12 @@ interface UserDao {
     @Upsert
     fun updateUser(user:User)
 
-    @Query("SELECT COUNT(*) FROM users where username =:username")
-    fun countUser(username:String):Int
+    @Query("SELECT COUNT() FROM users where username =:username")
+    suspend fun countUser(username:String):Int
 
     @Query("SELECT * FROM users where LOWER(username) LIKE LOWER(:username) AND password=:password")
-    fun loginUser(username:String,password:String):User
-    @Query("SELECT COUNT(*) FROM users ")
+    fun loginUser(username:String,password:String):List<User>
+    @Query("SELECT COUNT() FROM users ")
     fun usersAmount():Int
 
 

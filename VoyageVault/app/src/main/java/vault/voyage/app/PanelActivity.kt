@@ -14,7 +14,7 @@ import vault.voyage.app.panelFragments.nearmeFragment.NearMeFragment
 class PanelActivity : AppCompatActivity() {
     companion object{
         @JvmStatic
-        lateinit var user:User
+        lateinit var user: User
     }
     private lateinit var profile:ProfileFragment
     private lateinit var bag:BagFragment

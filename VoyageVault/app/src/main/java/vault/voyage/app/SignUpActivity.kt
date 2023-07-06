@@ -3,19 +3,26 @@ package vault.voyage.app
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.exceptions.RegisterFailedException
+import vault.voyage.app.model.User
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var layout: ConstraintLayout
+    private lateinit var db: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
@@ -42,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
             ).build()
 
             try {
-                UsersControl(db).register(
+                fieldsValidation(
                     userName_str,
                     firstName_str,
                     lastName_str,
@@ -50,7 +57,37 @@ class SignUpActivity : AppCompatActivity() {
                     password_str,
                     phoneNumber_str
                 )
-                makeSnackBar("User Registered Successfully")
+                var registeredUser = User()
+                try{
+                    registeredUser.setUserEmail(email_str)
+                    registeredUser.setUserNumber(phoneNumber_str)
+                    registeredUser.username = userName_str
+                    registeredUser.firstname = firstName_str
+                    registeredUser.lastname= lastName_str
+                    registeredUser.password = password_str
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Log.d("in Scope_count:", "${db.users.countUser(userName_str)}")
+                        if(db.users.countUser(userName_str)==1){
+                            runOnUiThread{
+                                makeSnackBar("User Exists Already")
+                            }
+                        }else{
+                            db.users.updateUser(registeredUser)
+                            makeSnackBar("User Registered Successfully")
+                            Log.d("REGISTER LOG:", "$username Registered. Size: ${db.users.usersAmount()}")
+                        }
+                    }
+
+                }catch (ex:Exception){
+                    runOnUiThread {
+                        when(ex){
+                            is InvalidPhoneNumber-> throw InvalidPhoneNumber("Invalid Phone Number")
+                            is InvalidEmailException ->throw InvalidEmailException("Invalid Email")
+                            else-> throw ex
+                        }
+                    }
+                }
+
             }catch (ex:Exception){
                 when(ex){
                     is RegisterFailedException->{
@@ -86,4 +123,20 @@ class SignUpActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
     }
+
+    fun fieldsValidation(
+        username:String,
+        firstname:String,
+        lastname:String,
+        email:String,
+        password:String,
+        number:String
+    ){
+        if(username.isEmpty() || firstname.isEmpty()||lastname.isEmpty()||email.isEmpty()||password.isEmpty()||number.isEmpty()){
+            throw EmptyFieldsException("Some Fields Are Empty While Registering")
+        }
+
+
+    }
+
 }

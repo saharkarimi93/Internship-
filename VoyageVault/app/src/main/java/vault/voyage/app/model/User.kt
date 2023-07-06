@@ -8,7 +8,7 @@ import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 @Entity("users")
 data class User(
-    var username:String,   @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = false) var username:String,
     var firstname:String,
     var lastname:String,
     var email:String,

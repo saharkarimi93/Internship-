@@ -12,24 +12,27 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.room.Room.databaseBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.LoginFailedException
+import vault.voyage.app.model.User
 import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
+    lateinit var db:AppDatabase
 
     private var layout:ConstraintLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val db = databaseBuilder(applicationContext, AppDatabase::class.java, "voyage-vault.db").build()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
         layout = findViewById(R.id.login_constraintLayout)
-        val users = UsersControl(db)
-
+        db = databaseBuilder(applicationContext, AppDatabase::class.java, "voyage-vault.db").build()
+//        val users = UsersControl(db)
         //TEST
-        users.register("sahar","sahar","karimi","saharkarimi@gmail.com","12345","+123456789")
 
 
         val travelImage = findViewById<ImageView>(R.id.firstImage)
@@ -41,12 +44,24 @@ class LoginActivity : AppCompatActivity() {
             var username_input = username.text.toString()
             var password_input = password.text.toString()
             try{
-                val loggedInUser = users.login(username_input,password_input)!!//(username_input,password_input)!!
-                Log.d("LOGIN TEST LOG:", (loggedInUser==null).toString())
-                PanelActivity.user = loggedInUser // loggedInUser
-                val panelActivity = Intent(this,PanelActivity::class.java)
-
-                startActivity(panelActivity)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val loggedInUser = login(username_input,password_input)//(username_input,password_input)!!
+                    if(loggedInUser!=null)
+                        PanelActivity.user = loggedInUser // loggedInUser
+                    else{
+                        runOnUiThread {
+                            var snack = Snackbar.make(layout!!,"Login Failed. Try Again",Snackbar.LENGTH_SHORT)
+                            snack.setAction("OK"){
+                            }
+                            snack.show()
+                        }
+                    }
+                    Log.d("LOGIN TEST LOG:", (loggedInUser==null).toString())
+                }
+                if(PanelActivity.user!=null) {
+                    Log.d("Start Panel:","Starting...")
+                    Intent(this, PanelActivity::class.java).also {startActivity(it)}
+                }
             }catch (ex:Exception){
                 when(ex){
                     is LoginFailedException->{
@@ -64,5 +79,21 @@ class LoginActivity : AppCompatActivity() {
             val signUpActivity = Intent(this,SignUpActivity::class.java)
             startActivity(signUpActivity)
         }
+    }
+    suspend fun login(username:String, password:String): User? {
+        if (db.users.countUser(username) == 1) {
+            val user = db.users.loginUser(username, password)
+            if (user.isEmpty()) {
+                runOnUiThread{
+                    var snack = Snackbar.make(layout!!,"Login Failed. Try Again",Snackbar.LENGTH_SHORT)
+                    snack.setAction("OK"){
+                    }
+                    snack.show()
+                }
+            } else {
+                return user[0]
+            }
+        }
+        return null
     }
 }
