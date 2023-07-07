@@ -1,5 +1,6 @@
 package vault.voyage.app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -16,6 +18,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.lang.Exception
 import java.net.URL
+import java.time.Duration
 
 class CurrencyConverterActivity : AppCompatActivity() {
     private lateinit var firstConversion:EditText
@@ -44,6 +47,10 @@ class CurrencyConverterActivity : AppCompatActivity() {
     }
     private fun getApiResult(){
         if(firstConversion.text.isNotEmpty() && firstConversion.text.isNotBlank()){
+            if(baseCurrency==convertedToCurrency){
+                Toast.makeText(this,"Please Select Different Currencies",Toast.LENGTH_SHORT).show()
+                return
+            }
             val API = "http://api.exchangeratesapi.io/v1/latest" +
                     "?access_key=b476714b3885e9427fe988fcecc2a412" +
                     "&base=" +baseCurrency
