@@ -19,6 +19,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import vault.voyage.app.LoginActivity
 import vault.voyage.app.R
 import vault.voyage.app.model.Task
 import vault.voyage.app.model.Todo
@@ -54,7 +58,7 @@ class TodoFragment(var user: User) : Fragment() {
 
 
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TasksAdapter(context,items.getUndoneTasks(),user,activity)
+        adapter = TasksAdapter(context,items.undoneTasks,user,activity)
         todoItems_recyclerView.adapter =adapter
         var addTaskFab = view.findViewById<ExtendedFloatingActionButton>(R.id.addTaskFab)
         addTaskFab.setOnClickListener{
@@ -77,7 +81,10 @@ class TodoFragment(var user: User) : Fragment() {
 
                 val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false)
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
-                    user.todoList.addTask(newTask)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        LoginActivity.db.tasks.upsertTask(newTask)
+                    }
+                    user.todoList.undoneTasks.add(newTask)
                     adapter.notifyDataSetChanged()
                     alertDialog.dismiss()
                 }else{
@@ -105,6 +112,9 @@ class TodoFragment(var user: User) : Fragment() {
         when(item.itemId){
             R.id.remove_all_tasks->{
                 items.clearList()
+                CoroutineScope(Dispatchers.IO).launch {
+                    LoginActivity.db.tasks.deleteAllTasks(user.username)
+                }
                 adapter.notifyDataSetChanged()
                 Toast.makeText(context,"All Items Removed",Toast.LENGTH_SHORT).show()
                 return true

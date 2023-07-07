@@ -19,11 +19,11 @@ class CompletedTaskAdapter (val context: Context?, var items:Todo): RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return items.getDoneTasks().count()
+        return items.doneTasks.count()
     }
 
     override fun onBindViewHolder(holder: CompletedTaskAdapter.ViewHolder, position: Int) {
-        val currentItem = items.getDoneTasks()[position]
+        val currentItem = items.doneTasks[position]
         holder.desc.text = currentItem.description
         holder.title.text = currentItem.title
         holder.restore.setOnClickListener {

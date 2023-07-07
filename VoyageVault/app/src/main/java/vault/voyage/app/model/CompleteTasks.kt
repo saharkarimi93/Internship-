@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.UUID
 
-@Entity("removedTasks")
-data class RemovedTask(
-    @PrimaryKey                       val id:UUID
+@Entity("completeTasks")
+data class CompleteTasks (
+     @PrimaryKey                       val id:UUID
     ,@ColumnInfo(name = "username")    val username:String
     ,@ColumnInfo(name = "task_title")  val title: String
     ,@ColumnInfo(name = "task_desc")   val description:String

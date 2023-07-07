@@ -1,6 +1,5 @@
 package vault.voyage.app.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -17,7 +16,7 @@ data class User(
     @Ignore
     constructor():this("","","","","","")
     @Ignore
-    var todoList = Todo(this)
+    var todoList = Todo()
     @Ignore
     var userBag:MutableSet<SelectedItem> = mutableSetOf()
 

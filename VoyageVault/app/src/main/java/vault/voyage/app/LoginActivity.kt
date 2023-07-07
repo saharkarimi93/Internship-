@@ -1,6 +1,7 @@
 package vault.voyage.app
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -15,7 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.LoginFailedException
+import vault.voyage.app.model.Task
 import vault.voyage.app.model.User
+import kotlin.streams.toList
 
 class LoginActivity : AppCompatActivity() {
     companion object{
@@ -68,10 +71,16 @@ class LoginActivity : AppCompatActivity() {
     suspend fun login(username:String, password:String){
         if (db.users.countUser(username) == 1) {
             val user = db.users.loginUser(username, password)
+
             if (user.isEmpty()) {
                 loginFailedError()
             } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    user[0].todoList.undoneTasks= db.tasks.getTasks(user[0].username).stream().filter { t-> !t.done }.toList() as ArrayList<Task>
+                    user[0].todoList.doneTasks= db.tasks.getTasks(user[0].username).stream().filter { t-> t.done }.toList() as ArrayList<Task>
+                }
                 goToPanel(user[0])
+
             }
         }else{
             loginFailedError()

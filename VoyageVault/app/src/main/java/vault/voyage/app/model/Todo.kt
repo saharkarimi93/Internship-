@@ -2,25 +2,14 @@ package vault.voyage.app.model
 
 import vault.voyage.app.LoginActivity
 
-class Todo(val user:User) {
-    private val undoneTasks = ArrayList<Task>()
-    private val doneTasks = ArrayList<Task>()
-    private val db = LoginActivity.db
-    fun getDoneTasks():ArrayList<Task>{
-        return (db.tasks.getTasks(user.username,true).value as ArrayList<Task>?)!!
-    }
-    fun getUndoneTasks():ArrayList<Task>{
-        val tasks = db.tasks.getTasks(user.username,false).value as ArrayList<Task>?
-        return if(tasks==null)
-            ArrayList<Task>()
-        else
-            tasks
-    }
-    fun addTask(task:Task){
-        db.tasks.upsertTask(task)
-    }
+class Todo() {
+    var undoneTasks = ArrayList<Task>()
+    var doneTasks = ArrayList<Task>()
+
+
     fun removeTask(task:Task){
-        db.tasks.deleteUserTask(user.username,task.id)
+        undoneTasks.remove(task)
+        doneTasks.remove(task)
     }
     fun restore(pos:Int):Unit{
         val task = doneTasks[pos]

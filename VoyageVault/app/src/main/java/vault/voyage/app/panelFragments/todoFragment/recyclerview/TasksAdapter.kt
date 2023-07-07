@@ -13,6 +13,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import vault.voyage.app.LoginActivity
 import vault.voyage.app.R
 import vault.voyage.app.model.Task
 import vault.voyage.app.model.User
@@ -44,6 +48,9 @@ class TasksAdapter (
         menu.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.delete_task_menuItem ->{
+                    CoroutineScope(Dispatchers.IO).launch{
+                        LoginActivity.db.tasks.deleteUserTask(user.username,currentItem.id)
+                    }
                     user.todoList.removeTask(currentItem)
                     Toast.makeText(context,"Task Deleted",Toast.LENGTH_SHORT).show()
                     activity.runOnUiThread {
@@ -52,6 +59,9 @@ class TasksAdapter (
                 }
                 R.id.complete_task_menuItem->{
                     user.todoList.doneTask(position)
+                    CoroutineScope(Dispatchers.IO).launch{
+                        LoginActivity.db.tasks.upsertTask(currentItem)
+                    }
                     Toast.makeText(context,"Task Completed successfully",Toast.LENGTH_SHORT).show()
                     activity.runOnUiThread {
                         notifyDataSetChanged()
