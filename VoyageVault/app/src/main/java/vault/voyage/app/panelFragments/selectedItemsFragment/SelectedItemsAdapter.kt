@@ -1,4 +1,4 @@
-package vault.voyage.app.panelFragments.selectedItemsFragment.recyclerview
+package vault.voyage.app.panelFragments.selectedItemsFragment
 
 import android.content.Context
 import android.content.Intent
@@ -13,9 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.EmptyActivity
 import vault.voyage.app.R
+import vault.voyage.app.model.Category
 import vault.voyage.app.model.User
-import vault.voyage.app.panelFragments.bagFragment.bagSelectedItem.BagSelectedItemFragment
-import vault.voyage.app.panelFragments.selectedItemsFragment.Category
 
 class SelectedItemsAdapter(
     val activity:AppCompatActivity?,
@@ -43,7 +42,7 @@ class SelectedItemsAdapter(
                     context?.startActivity(it)
                 }
             }else {
-                switchFragment(BagSelectedItemFragment(currentItem.list, user))
+                switchFragment(OnSelectItemFragment(currentItem.list, user))
             }
         }
     }

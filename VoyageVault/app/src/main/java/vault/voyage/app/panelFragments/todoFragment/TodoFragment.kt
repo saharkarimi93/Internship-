@@ -33,7 +33,7 @@ import java.util.UUID
 
 
 class TodoFragment(var user: User) : Fragment() {
-    var completedItems_fragment:Fragment = CompletedTaskFragment(user.todoList)
+    var completedItems_fragment:Fragment = CompletedTaskFragment(user)
     private var items: Todo = user.todoList
     private lateinit var adapter: TasksAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,7 +113,7 @@ class TodoFragment(var user: User) : Fragment() {
             R.id.remove_all_tasks->{
                 items.clearList()
                 CoroutineScope(Dispatchers.IO).launch {
-                    LoginActivity.db.tasks.deleteAllTasks(user.username)
+                    LoginActivity.db.tasks.deleteUndoneTasks(user.username)
                 }
                 adapter.notifyDataSetChanged()
                 Toast.makeText(context,"All Items Removed",Toast.LENGTH_SHORT).show()

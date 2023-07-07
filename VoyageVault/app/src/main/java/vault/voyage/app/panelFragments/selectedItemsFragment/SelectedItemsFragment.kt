@@ -1,5 +1,6 @@
 package vault.voyage.app.panelFragments.selectedItemsFragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import vault.voyage.app.PanelActivity
 import vault.voyage.app.R
+import vault.voyage.app.model.Category
 import vault.voyage.app.model.SelectedItem
 import vault.voyage.app.model.User
-import vault.voyage.app.panelFragments.selectedItemsFragment.recyclerview.SelectedItemsAdapter
 import kotlin.streams.toList
 
 class SelectedItemsFragment(val user: User) : Fragment() {
@@ -57,7 +56,11 @@ BagItem(R.drawable.clothing,"Clothing", clothingList, R.color.bag_Clothing),
         return view
     }
     private fun filterUserBagList(category:String):MutableList<SelectedItem>{
-        return user.userBag.stream().filter { e-> e.category == category }.toList().toMutableList()
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            user.userBag.stream().filter { e-> e.category == category }.toList().toMutableList()
+        } else {
+            TODO("VERSION.SDK_INT < N")
+        }
     }
 
 }

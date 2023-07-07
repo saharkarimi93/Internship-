@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vault.voyage.app.R
 import vault.voyage.app.model.Todo
+import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.todoFragment.completetasks.recyclerview.CompletedTaskAdapter
 
 
-class CompletedTaskFragment(val todo: Todo) : Fragment() {
-
+class CompletedTaskFragment(val user:User) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,7 +21,7 @@ class CompletedTaskFragment(val todo: Todo) : Fragment() {
         val v:View =inflater.inflate(R.layout.fragment_completed_task, container, false)
         val recyclerview = v.findViewById<RecyclerView>(R.id.completed_tasks_recycler_view)
         recyclerview.layoutManager = LinearLayoutManager(context)
-        recyclerview.adapter = CompletedTaskAdapter(context,todo)
+        recyclerview.adapter = CompletedTaskAdapter(context,user)
 
 
 

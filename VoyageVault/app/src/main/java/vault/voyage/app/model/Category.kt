@@ -1,4 +1,4 @@
-package vault.voyage.app.panelFragments.selectedItemsFragment
+package vault.voyage.app.model
 
 import vault.voyage.app.model.SelectedItem
 

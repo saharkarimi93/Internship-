@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.LoginFailedException
+import vault.voyage.app.model.SelectedItem
 import vault.voyage.app.model.Task
 import vault.voyage.app.model.User
 import kotlin.streams.toList
@@ -78,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     user[0].todoList.undoneTasks= db.tasks.getTasks(user[0].username).stream().filter { t-> !t.done }.toList() as ArrayList<Task>
                     user[0].todoList.doneTasks= db.tasks.getTasks(user[0].username).stream().filter { t-> t.done }.toList() as ArrayList<Task>
+                    user[0].userBag= db.selectedItems.getAllSelectedItems(user[0].username).toSet().toMutableSet()
                 }
                 goToPanel(user[0])
 

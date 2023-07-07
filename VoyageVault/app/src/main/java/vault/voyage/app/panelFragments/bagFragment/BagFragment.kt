@@ -1,9 +1,11 @@
 package vault.voyage.app.panelFragments.bagFragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,7 @@ import vault.voyage.app.model.User
 import vault.voyage.app.model.SelectedItem
 import vault.voyage.app.model.BagItem
 import vault.voyage.app.panelFragments.bagFragment.recyclerview.BagItemsAdapter
+import java.util.UUID
 import kotlin.streams.toList
 
 
@@ -23,6 +26,7 @@ class BagFragment(val user: User) : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,11 +63,12 @@ class BagFragment(val user: User) : Fragment() {
         return view;
     }
 
-    fun stringToMutableList(category:String,inputString:String): MutableList<SelectedItem> {
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun stringToMutableList(category:String, inputString:String): MutableList<SelectedItem> {
         return inputString
             .split(",")
             .stream()
-            .map { e-> SelectedItem(e,category) }
+            .map { e-> SelectedItem(user.username,e,category)}
             .toList()
             .toMutableList()
 

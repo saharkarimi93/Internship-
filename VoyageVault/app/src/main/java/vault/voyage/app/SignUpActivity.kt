@@ -88,7 +88,7 @@ class SignUpActivity : AppCompatActivity() {
                 makeSnackBar("User Exists Already")
             }
         }else{
-            db.users.updateUser(user)
+            db.users.UpsertUser(user)
             makeSnackBar("User Registered Successfully")
             Log.d("REGISTER LOG:", "${user.username} Registered. Size: ${db.users.usersAmount()}")
         }

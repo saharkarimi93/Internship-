@@ -1,8 +1,6 @@
 package vault.voyage.app.database
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import vault.voyage.app.model.User
@@ -11,7 +9,9 @@ import vault.voyage.app.model.User
 interface UserDao {
     //Inserts new User or updates the exist user
     @Upsert
-    fun updateUser(user:User)
+    fun UpsertUser(user:User)
+
+
 
     @Query("SELECT COUNT() FROM users where username =:username")
     suspend fun countUser(username:String):Int

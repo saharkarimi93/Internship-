@@ -1,10 +1,9 @@
-package vault.voyage.app.panelFragments.bagFragment.bagSelectedItem
+package vault.voyage.app.panelFragments.selectedItemsFragment
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,12 +16,12 @@ import vault.voyage.app.R
 import vault.voyage.app.model.SelectedItem
 import vault.voyage.app.model.User
 
-class BagSelectedItemAdapter(
+class OnSelectItemsAdapter(
     val context: Context?,
     val activity: AppCompatActivity,
     var items:MutableList<SelectedItem>,
     val user:User
-): RecyclerView.Adapter<BagSelectedItemAdapter.ViewHolder>() {
+): RecyclerView.Adapter<OnSelectItemsAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,21 +36,17 @@ class BagSelectedItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = items[position]
         holder.bag_item_info.text = currentItem.info
-        holder.options.setText("➕")
+        holder.options.setText("➖")
         holder.options.setOnClickListener {
-            val itemAdded:Boolean = user.userBag.add(currentItem)
-            if(itemAdded) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    LoginActivity.db.selectedItems.insert(currentItem)
-                }
-                activity.runOnUiThread{
-                    Toast.makeText(context, "Item Added to your Bag", Toast.LENGTH_SHORT).show()
-                }
-            }else{
-                activity.runOnUiThread{
-                    Toast.makeText(context,"Item Exists in your bag",Toast.LENGTH_SHORT).show()
-                }
+            items.remove(currentItem)
+            user.userBag.remove(currentItem)
+            CoroutineScope(Dispatchers.IO).launch {
+                LoginActivity.db.selectedItems.delete(currentItem.username,currentItem.info,currentItem.category)
             }
+            activity.runOnUiThread{
+                Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show()
+            }
+            notifyDataSetChanged()
         }
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

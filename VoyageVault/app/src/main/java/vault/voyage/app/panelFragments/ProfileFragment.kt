@@ -11,8 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import vault.voyage.app.CurrencyConverterActivity
-import vault.voyage.app.EmptyActivity
+import vault.voyage.app.LoginActivity
 import vault.voyage.app.R
 import vault.voyage.app.exceptions.InvalidEmailException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
@@ -21,19 +24,19 @@ import vault.voyage.app.model.EditStatus
 import vault.voyage.app.model.User
 
 class ProfileFragment(val user: User) : Fragment() {
-    private var isEditUsername: EditActivator = EditActivator(false)
+
     private var isEditFirstname: EditActivator = EditActivator(false)
     private var isEditLastname: EditActivator = EditActivator(false)
     private var isEditEmail: EditActivator = EditActivator(false)
     private var isEditPassword: EditActivator = EditActivator(false)
     private var isEditNumber: EditActivator = EditActivator(false)
 
-    private lateinit var username: EditText
     private lateinit var firstname: EditText
     private lateinit var lastname: EditText
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var number: EditText
+    private lateinit var username: EditText
     private lateinit var currency_converter: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,6 @@ class ProfileFragment(val user: User) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
         username = view.findViewById(R.id.profile_username)
         firstname = view.findViewById(R.id.profile_firstname)
         lastname = view.findViewById(R.id.profile_lastname)
@@ -58,7 +60,6 @@ class ProfileFragment(val user: User) : Fragment() {
             Intent(context, CurrencyConverterActivity::class.java).also { context?.startActivity(it) }
         }
         setAllChanges()
-
         username.isEnabled = false
         firstname.isEnabled = false
         lastname.isEnabled = false
@@ -66,21 +67,15 @@ class ProfileFragment(val user: User) : Fragment() {
         password.isEnabled = false
         email.isEnabled = false
 
-        val editusername = view.findViewById<ImageButton>(R.id.profile_edit_username)
         val editPassword = view.findViewById<ImageButton>(R.id.profile_edit_password)
         val editfirstname = view.findViewById<ImageButton>(R.id.profile_edit_firstname)
         val editlastname = view.findViewById<ImageButton>(R.id.profile_editlastname)
         val editEmail = view.findViewById<ImageButton>(R.id.profile_edit_email)
         val editNumber = view.findViewById<ImageButton>(R.id.profile_edit_number)
 
-        editusername.setOnClickListener(editTexts(isEditUsername, username, EditStatus.USERNAME))
         editPassword.setOnClickListener(editTexts(isEditPassword, password, EditStatus.PASSWORD))
         editfirstname.setOnClickListener(
-            editTexts(
-                isEditFirstname,
-                firstname,
-                EditStatus.FIRSTNAME
-            )
+            editTexts(isEditFirstname, firstname, EditStatus.FIRSTNAME)
         )
         editlastname.setOnClickListener(editTexts(isEditLastname, lastname, EditStatus.LASTNAME))
         editEmail.setOnClickListener(editTexts(isEditEmail, email, EditStatus.EMAIL))
@@ -96,6 +91,9 @@ class ProfileFragment(val user: User) : Fragment() {
         email.setText(user.email)
         number.setText(user.number)
         password.setText(user.password)
+        CoroutineScope(Dispatchers.IO).launch {
+            LoginActivity.db.users.UpsertUser(user)
+        }
     }
 
     private fun editTexts(
@@ -108,7 +106,6 @@ class ProfileFragment(val user: User) : Fragment() {
                 var exceptionThrown = false
                 if (editText.text.isNotEmpty()) {
                     when (editStatus) {
-                        EditStatus.USERNAME -> user.username = editText.text.toString()
                         EditStatus.EMAIL -> {
                             try {
                                 user.setUserEmail(editText.text.toString())
