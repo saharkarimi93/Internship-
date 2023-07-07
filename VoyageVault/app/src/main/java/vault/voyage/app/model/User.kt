@@ -17,7 +17,7 @@ data class User(
     @Ignore
     constructor():this("","","","","","")
     @Ignore
-    var todoList = Todo()
+    var todoList = Todo(this)
     @Ignore
     var userBag:MutableSet<SelectedItem> = mutableSetOf()
 

@@ -17,7 +17,7 @@ interface UserDao {
     suspend fun countUser(username:String):Int
 
     @Query("SELECT * FROM users where LOWER(username) LIKE LOWER(:username) AND password=:password")
-    fun loginUser(username:String,password:String):List<User>
+    suspend fun loginUser(username:String,password:String):List<User>
     @Query("SELECT COUNT() FROM users ")
     fun usersAmount():Int
 

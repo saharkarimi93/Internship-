@@ -54,7 +54,7 @@ class TodoFragment(var user: User) : Fragment() {
 
 
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TasksAdapter(context,items.getTasks(),user,activity)
+        adapter = TasksAdapter(context,items.getUndoneTasks(),user,activity)
         todoItems_recyclerView.adapter =adapter
         var addTaskFab = view.findViewById<ExtendedFloatingActionButton>(R.id.addTaskFab)
         addTaskFab.setOnClickListener{
@@ -77,7 +77,7 @@ class TodoFragment(var user: User) : Fragment() {
 
                 val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false)
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
-                    user.todoList.getTasks().add(newTask)
+                    user.todoList.addTask(newTask)
                     adapter.notifyDataSetChanged()
                     alertDialog.dismiss()
                 }else{
