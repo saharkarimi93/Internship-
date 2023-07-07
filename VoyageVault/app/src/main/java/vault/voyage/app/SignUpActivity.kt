@@ -7,12 +7,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
@@ -22,18 +20,20 @@ import vault.voyage.app.model.User
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var layout: ConstraintLayout
-    private lateinit var db: AppDatabase
+    private lateinit var firstname:EditText
+    private lateinit var lastname :EditText
+    private lateinit var username :EditText
+    private lateinit var password :EditText
+    private lateinit var email :EditText
+    private lateinit var phoneNumber :EditText
+    private lateinit var signupBtn :Button
+
+    private var db: AppDatabase = LoginActivity.db
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
-        layout = findViewById(R.id.signup_constraintLayout)
-        val firstname = findViewById<EditText>(R.id.signup_firstname)
-        val lastname = findViewById<EditText>(R.id.signup_lastname)
-        val username = findViewById<EditText>(R.id.signup_username)
-        val password = findViewById<EditText>(R.id.signup_password)
-        val email = findViewById<EditText>(R.id.signup_email)
-        val phoneNumber = findViewById<EditText>(R.id.signup_phonenumber)
-        val signupBtn = findViewById<Button>(R.id.signup_button)
+        initializeUi()
 
         signupBtn.setOnClickListener {
             val firstName_str = firstname.text.toString()
@@ -42,52 +42,17 @@ class SignUpActivity : AppCompatActivity() {
             val password_str = password.text.toString()
             val email_str = email.text.toString()
             val phoneNumber_str = phoneNumber.text.toString()
-            val db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java,
-                "voyage-vault.db"
-            ).build()
+
 
             try {
-                fieldsValidation(
-                    userName_str,
-                    firstName_str,
-                    lastName_str,
-                    email_str,
-                    password_str,
-                    phoneNumber_str
+                fieldsValidation(userName_str, firstName_str, lastName_str, email_str, password_str, phoneNumber_str)
+
+                var registeredUser = createUser(email_str, phoneNumber_str, userName_str, firstName_str, lastName_str, password_str
                 )
-                var registeredUser = User()
-                try{
-                    registeredUser.setUserEmail(email_str)
-                    registeredUser.setUserNumber(phoneNumber_str)
-                    registeredUser.username = userName_str
-                    registeredUser.firstname = firstName_str
-                    registeredUser.lastname= lastName_str
-                    registeredUser.password = password_str
-                    CoroutineScope(Dispatchers.IO).launch {
-                        Log.d("in Scope_count:", "${db.users.countUser(userName_str)}")
-                        if(db.users.countUser(userName_str)==1){
-                            runOnUiThread{
-                                makeSnackBar("User Exists Already")
-                            }
-                        }else{
-                            db.users.updateUser(registeredUser)
-                            makeSnackBar("User Registered Successfully")
-                            Log.d("REGISTER LOG:", "$username Registered. Size: ${db.users.usersAmount()}")
-                        }
-                    }
-
-                }catch (ex:Exception){
-                    runOnUiThread {
-                        when(ex){
-                            is InvalidPhoneNumber-> throw InvalidPhoneNumber("Invalid Phone Number")
-                            is InvalidEmailException ->throw InvalidEmailException("Invalid Email")
-                            else-> throw ex
-                        }
-                    }
+                CoroutineScope(Dispatchers.IO).launch {
+                    Log.d("in Scope_count:", "${db.users.countUser(userName_str)}")
+                    signUpUser(registeredUser)
                 }
-
             }catch (ex:Exception){
                 when(ex){
                     is RegisterFailedException->{
@@ -107,6 +72,46 @@ class SignUpActivity : AppCompatActivity() {
 
         }
     }
+    fun initializeUi(){
+        layout = findViewById(R.id.signup_constraintLayout)
+        firstname = findViewById<EditText>(R.id.signup_firstname)
+        lastname = findViewById<EditText>(R.id.signup_lastname)
+        username = findViewById<EditText>(R.id.signup_username)
+        password = findViewById<EditText>(R.id.signup_password)
+        email = findViewById<EditText>(R.id.signup_email)
+        phoneNumber = findViewById<EditText>(R.id.signup_phonenumber)
+        signupBtn = findViewById<Button>(R.id.signup_button)
+    }
+    suspend fun signUpUser(user:User){
+        if(db.users.countUser(user.username)==1){
+            runOnUiThread{
+                makeSnackBar("User Exists Already")
+            }
+        }else{
+            db.users.updateUser(user)
+            makeSnackBar("User Registered Successfully")
+            Log.d("REGISTER LOG:", "${user.username} Registered. Size: ${db.users.usersAmount()}")
+        }
+    }
+
+    private fun createUser(
+        email_str: String,
+        phoneNumber_str: String,
+        userName_str: String,
+        firstName_str: String,
+        lastName_str: String,
+        password_str: String
+    ):User {
+        val registeredUser = User()
+        registeredUser.setUserEmail(email_str)
+        registeredUser.setUserNumber(phoneNumber_str)
+        registeredUser.username = userName_str
+        registeredUser.firstname = firstName_str
+        registeredUser.lastname = lastName_str
+        registeredUser.password = password_str
+        return registeredUser
+    }
+
     fun makeSnackBar(message:String){
         var snack = Snackbar.make(layout!!,message, Snackbar.LENGTH_SHORT)
         snack.setAction("OK"){
