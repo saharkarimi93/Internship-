@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -100,21 +101,27 @@ class TodoFragment(var user: User) : Fragment() {
             val cancel = dialogView.findViewById<Button>(R.id.cancel_add_task)
             val title_dialog = dialogView.findViewById<EditText>(R.id.task_title_dialog)
             val desc_dialog = dialogView.findViewById<EditText>(R.id.task_desc_dialog)
+            val datePicker = dialogView.findViewById<DatePicker>(R.id.selected_date)
+
+
             cancel.setOnClickListener {
                 alertDialog.dismiss()
             }
             addTask.setOnClickListener {
                 val task_title = title_dialog.text.toString()
                 val task_desc = desc_dialog.text.toString()
+                val day = datePicker.dayOfMonth
+                val month = datePicker.month + 1
+                val year = datePicker.year
 
-
-                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false,date.toString())
+                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false,LocalDate.of(year,month,day).toString())
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
                     CoroutineScope(Dispatchers.IO).launch {
                         LoginActivity.db.tasks.upsertTask(newTask)
                     }
                     user.todoList.undoneTasks.add(newTask)
                     adapter.items = items.undoneTasks.stream().filter { e->e.date==date.toString() }.toList().toMutableList()
+                    Toast.makeText(context,"Task Added To ${LocalDate.of(year,month,day)} ",Toast.LENGTH_SHORT).show()
                     adapter.notifyDataSetChanged()
                     alertDialog.dismiss()
                 }else{
