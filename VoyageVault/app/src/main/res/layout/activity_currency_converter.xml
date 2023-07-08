@@ -9,7 +9,7 @@
     >
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="270dp"
         android:layout_gravity="center"
         app:cardElevation="10dp"
         app:cardCornerRadius="5dp"
@@ -19,49 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <EditText
+
+                android:id="@+id/et_firstConversion"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="Enter Value..."
+                android:inputType="numberDecimal"
+                android:textColor="@color/button"
+                >
+            </EditText>
+            <Spinner
+                android:id="@+id/spinner_firstConversion"
+                android:entries="@array/currencies"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/et_firstConversion"
-                        android:layout_width="170dp"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content">
-                    </EditText>
 
-                </com.google.android.material.textfield.TextInputLayout>
-                <Spinner
-                    android:id="@+id/spinner_firstConversion"
-                    android:entries="@array/currencies"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/et_secondConversion"
-                        android:layout_width="170dp"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content">
-                    </EditText>
-
-                </com.google.android.material.textfield.TextInputLayout>
                 <Spinner
                     android:id="@+id/spinner_secondConversion"
                     android:entries="@array/currencies2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,6 +61,16 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     />
             </LinearLayout>
+            <TextView
+                android:id="@+id/et_secondConversion"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="60dp"
+                android:textColor="@color/button"
+                android:textSize="20dp"
+                android:inputType="numberDecimal"
+                >
+            </TextView>
         </LinearLayout>
 
 

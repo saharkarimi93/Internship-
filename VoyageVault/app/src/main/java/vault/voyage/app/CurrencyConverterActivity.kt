@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,7 @@ import java.time.Duration
 
 class CurrencyConverterActivity : AppCompatActivity() {
     private lateinit var firstConversion:EditText
-    private lateinit var secondConversion:EditText
+    private lateinit var secondConversion:TextView
     private lateinit var spinner_firstConversion:Spinner
     private lateinit var spinner_secondConversion:Spinner
     private lateinit var convert_button:Button
@@ -66,7 +67,7 @@ class CurrencyConverterActivity : AppCompatActivity() {
 
                         withContext(Dispatchers.Main){
                             val text = ((firstConversion.text.toString().toFloat())*conversionRate).toString()
-                            secondConversion.setText(text)
+                            secondConversion.setText("${firstConversion.text} $baseCurrency = $text $convertedToCurrency")
                             Log.d("CURRENCY", "getApiResult: "+text)
                         }
                     }catch (e:Exception){
