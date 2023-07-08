@@ -22,7 +22,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +34,7 @@ import vault.voyage.app.panelFragments.todoFragment.completetasks.CompletedTaskF
 import vault.voyage.app.panelFragments.todoFragment.recyclerview.TasksAdapter
 import java.time.LocalDate
 import java.util.UUID
+import kotlin.streams.toList
 
 
 class TodoFragment(var user: User) : Fragment() {
@@ -42,8 +42,8 @@ class TodoFragment(var user: User) : Fragment() {
     private var items: Todo = user.todoList
     private lateinit var adapter: TasksAdapter
     private lateinit var theDay:TextView
-    private lateinit var nextDay:FloatingActionButton
-    private lateinit var previousDay:FloatingActionButton
+    private lateinit var nextDay:ExtendedFloatingActionButton
+    private lateinit var previousDay:ExtendedFloatingActionButton
     private lateinit var date:LocalDate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,12 +69,25 @@ class TodoFragment(var user: User) : Fragment() {
         date = LocalDate.now()
         var activity:AppCompatActivity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(todoToolbar)
-
         val todoItems_recyclerView:RecyclerView = view.findViewById(R.id.todo_items_recyclerview)
 
 
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = TasksAdapter(context,items.undoneTasks,user,activity)
+        nextDay.setOnClickListener {
+            date = date.plusDays(1)
+            theDay.setText(date.toString())
+            adapter.items = items.undoneTasks.stream().filter { e-> e.date ==date.toString() }.toList().toMutableList()
+            adapter.notifyDataSetChanged()
+
+        }
+        previousDay.setOnClickListener {
+            date = date.minusDays(1)
+            theDay.setText(date.toString())
+            adapter.items = items.undoneTasks.stream().filter { e->e.date==date.toString() }.toList().toMutableList()
+            adapter.notifyDataSetChanged()
+
+        }
         todoItems_recyclerView.adapter =adapter
         var addTaskFab = view.findViewById<ExtendedFloatingActionButton>(R.id.addTaskFab)
         addTaskFab.setOnClickListener{
@@ -95,12 +108,13 @@ class TodoFragment(var user: User) : Fragment() {
                 val task_desc = desc_dialog.text.toString()
 
 
-                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false,date)
+                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false,date.toString())
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
                     CoroutineScope(Dispatchers.IO).launch {
                         LoginActivity.db.tasks.upsertTask(newTask)
                     }
                     user.todoList.undoneTasks.add(newTask)
+                    adapter.items = items.undoneTasks.stream().filter { e->e.date==date.toString() }.toList().toMutableList()
                     adapter.notifyDataSetChanged()
                     alertDialog.dismiss()
                 }else{
