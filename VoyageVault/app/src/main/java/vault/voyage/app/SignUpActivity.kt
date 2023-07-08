@@ -11,12 +11,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import vault.voyage.app.database.AppDatabase
 import vault.voyage.app.exceptions.EmptyFieldsException
 import vault.voyage.app.exceptions.InvalidEmailException
+import vault.voyage.app.exceptions.InvalidPasswordException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.exceptions.RegisterFailedException
 import vault.voyage.app.model.User
+import vault.voyage.app.model.Validator
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var layout: ConstraintLayout
@@ -36,16 +39,19 @@ class SignUpActivity : AppCompatActivity() {
         initializeUi()
 
         signupBtn.setOnClickListener {
-            val firstName_str = firstname.text.toString()
-            val lastName_str = lastname.text.toString()
             val userName_str = username.text.toString()
-            val password_str = password.text.toString()
+            if(!Validator.validUsername(userName_str)){
+                makeDialog("Username is Short. please Enter a username with 4 to 18 characters")
+                return@setOnClickListener
+            }
             val email_str = email.text.toString()
             val phoneNumber_str = phoneNumber.text.toString()
-
+            val firstName_str = firstname.text.toString()
+            val lastName_str = lastname.text.toString()
+            val password_str = password.text.toString()
 
             try {
-                fieldsValidation(userName_str, firstName_str, lastName_str, email_str, password_str, phoneNumber_str)
+                ValidAllFieldsAreFilled(userName_str, firstName_str, lastName_str, email_str, password_str, phoneNumber_str)
 
                 var registeredUser = createUser(email_str, phoneNumber_str, userName_str, firstName_str, lastName_str, password_str
                 )
@@ -66,6 +72,9 @@ class SignUpActivity : AppCompatActivity() {
                     }
                     is EmptyFieldsException->{
                         makeSnackBar("Some Fields Are Empty")
+                    }
+                    is InvalidPasswordException->{
+                        makeDialog("Password is Short. Password must contains atLeast one char,one letter, one digit and up to 8 or longer")
                     }
                 }
             }
@@ -108,7 +117,7 @@ class SignUpActivity : AppCompatActivity() {
         registeredUser.username = userName_str
         registeredUser.firstname = firstName_str
         registeredUser.lastname = lastName_str
-        registeredUser.password = password_str
+        registeredUser.setUserPassword(password_str)
         return registeredUser
     }
 
@@ -129,7 +138,7 @@ class SignUpActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun fieldsValidation(
+    fun ValidAllFieldsAreFilled(
         username:String,
         firstname:String,
         lastname:String,

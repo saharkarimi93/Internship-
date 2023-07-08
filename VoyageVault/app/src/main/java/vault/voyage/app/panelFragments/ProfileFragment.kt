@@ -18,6 +18,7 @@ import vault.voyage.app.CurrencyConverterActivity
 import vault.voyage.app.LoginActivity
 import vault.voyage.app.R
 import vault.voyage.app.exceptions.InvalidEmailException
+import vault.voyage.app.exceptions.InvalidPasswordException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 import vault.voyage.app.model.EditActivator
 import vault.voyage.app.model.EditStatus
@@ -115,7 +116,13 @@ class ProfileFragment(val user: User) : Fragment() {
                             }
                         }
 
-                        EditStatus.PASSWORD -> user.password = editText.text.toString()
+                        EditStatus.PASSWORD -> {
+                            try{
+                                user.setUserPassword( editText.text.toString())
+                            }catch (ex:InvalidPasswordException){
+                                makeDialog("Password is Short. Password must contains atLeast one char,one letter, one digit and up to 8 or longer")
+                            }
+                        }
                         EditStatus.FIRSTNAME -> user.firstname = editText.text.toString()
                         EditStatus.LASTNAME -> user.lastname = editText.text.toString()
                         EditStatus.NUMBER -> {

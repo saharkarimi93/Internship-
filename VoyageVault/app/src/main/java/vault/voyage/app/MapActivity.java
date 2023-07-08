@@ -2,9 +2,15 @@ package vault.voyage.app;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +26,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "MapActivity";
 
@@ -33,14 +43,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private SupportMapFragment supportMapFragment;
+    private EditText mSearch;
     private double currentLat,currentLong;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        mSearch = findViewById(R.id.input_search);
         getLocationPermission();
+        init();
+    }
+    private void init(){
+        mSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionID, KeyEvent keyEvent) {
+                if (actionID == EditorInfo.IME_ACTION_SEARCH
+                        || actionID == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                }
+                return false;
+            }
+        });
     }
 
+    private void geoLocate(){
+        Geocoder geocoder = new Geocoder(MapActivity.this);
+        List<Address> list = new ArrayList<>();
+        try{
+            list = geocoder.getFromLocationName(mSearch.getText().toString(),1);
+        }catch (IOException e){
+            Log.d(TAG, "geoLocate: "+e.getMessage());
+        }
+        if(list.size()>0){
+            Address a = list.get(0);
+            Log.d(TAG, "geoLocate: found a location: "+a.toString());
+        }
+    }
 
 
     private void moveCamera(LatLng latLng, float zoom) {

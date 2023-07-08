@@ -48,7 +48,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_empty">EmptyActivity</string>
-    <string name="google_maps_API_Key">AIzaSyDnWTKaR0beqr-ABt17yQWfS3krNjwcEao</string>
+    <string name="google_maps_API_Key">AIzaSyAlcPTEoUPoz4WNjBGX2wJdqdc1EQQ2RoE</string>
 
     <string-array name="currencies">
         <item>EUR</item>

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import vault.voyage.app.exceptions.InvalidEmailException
+import vault.voyage.app.exceptions.InvalidPasswordException
 import vault.voyage.app.exceptions.InvalidPhoneNumber
 @Entity("users")
 data class User(
@@ -19,11 +20,16 @@ data class User(
     var todoList = Todo()
     @Ignore
     var userBag:MutableSet<SelectedItem> = mutableSetOf()
-
+    fun setUserPassword(value:String){
+        if(Validator.validPassword(value)){
+            password = value
+        }else{
+            throw InvalidPasswordException("$value is Invalid as Password")
+        }
+    }
 
     fun setUserEmail(value:String) {
-        val matchPattern = Regex("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$");
-        if(matchPattern.matches(value)) {
+        if(Validator.validEmail(value)) {
             email = value
         }else{
             throw InvalidEmailException("$value is Invalid as Email Address")
@@ -31,8 +37,7 @@ data class User(
     }
 
     fun setUserNumber(value:String) {
-        val pattern = Regex("^\\+?[1-9][0-9]{7,14}")
-        if(value.toString().length==10 && pattern.matches(value)){
+        if(Validator.validPhoneNumber(value)){
             number= value
         }else{
             throw InvalidPhoneNumber("$value is invalid as phone number")
