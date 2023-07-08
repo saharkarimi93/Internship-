@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
         layout = findViewById(R.id.login_constraintLayout)
-        db = databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
+        db = databaseBuilder(applicationContext, AppDatabase::class.java, "voyage-vault.db").build()
 
         val travelImage = findViewById<ImageView>(R.id.firstImage)
         travelImage.setImageResource(R.drawable.travel)

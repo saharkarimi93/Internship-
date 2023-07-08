@@ -9,7 +9,7 @@ import vault.voyage.app.model.User
 
 @Database(
     entities = [User::class, Task::class, SelectedItem::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 
