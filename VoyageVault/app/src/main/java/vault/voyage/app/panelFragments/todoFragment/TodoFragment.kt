@@ -2,6 +2,7 @@ package vault.voyage.app.panelFragments.todoFragment
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
@@ -19,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +33,7 @@ import vault.voyage.app.model.Todo
 import vault.voyage.app.model.User
 import vault.voyage.app.panelFragments.todoFragment.completetasks.CompletedTaskFragment
 import vault.voyage.app.panelFragments.todoFragment.recyclerview.TasksAdapter
+import java.time.LocalDate
 import java.util.UUID
 
 
@@ -36,12 +41,17 @@ class TodoFragment(var user: User) : Fragment() {
     var completedItems_fragment:Fragment = CompletedTaskFragment(user)
     private var items: Todo = user.todoList
     private lateinit var adapter: TasksAdapter
+    private lateinit var theDay:TextView
+    private lateinit var nextDay:FloatingActionButton
+    private lateinit var previousDay:FloatingActionButton
+    private lateinit var date:LocalDate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setHasOptionsMenu(true)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +61,12 @@ class TodoFragment(var user: User) : Fragment() {
         val view:View = inflater.inflate(R.layout.fragment_todo, container, false)
         activity?.setTitle("Todo")
         var todoToolbar: Toolbar = view.findViewById(R.id.todo_toolbar)
+
+        theDay = view.findViewById(R.id.theDay)
+        nextDay = view.findViewById(R.id.nextDay)
+        previousDay = view.findViewById(R.id.previousDay)
+        theDay.setText(LocalDate.now().toString())
+        date = LocalDate.now()
         var activity:AppCompatActivity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(todoToolbar)
 
@@ -79,7 +95,7 @@ class TodoFragment(var user: User) : Fragment() {
                 val task_desc = desc_dialog.text.toString()
 
 
-                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false)
+                val newTask = Task(UUID.randomUUID(),user.username,task_title,task_desc,false,date)
                 if(task_title.isNotEmpty() && task_desc.isNotEmpty()) {
                     CoroutineScope(Dispatchers.IO).launch {
                         LoginActivity.db.tasks.upsertTask(newTask)
