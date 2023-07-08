@@ -16,4 +16,5 @@
     <color name="bag_beach_supplies">#C6B790</color>
     <color name="bag_car_supplies">#9C8BFF</color>
     <color name="bag_needs">#BAFFF7</color>
+    <color name="date_picker">#EAEAEA</color>
 </resources>
