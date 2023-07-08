@@ -14,7 +14,7 @@ data class Task(
     ,@ColumnInfo(name = "task_title")  val title: String
     ,@ColumnInfo(name = "task_desc")   val description:String
     ,@ColumnInfo(name = "task_status") var done:Boolean
-    ,@ColumnInfo(name = "task_date")   var date:LocalDate
+    ,@ColumnInfo(name = "task_date")   var date:String
 ) {
 
     @Ignore
