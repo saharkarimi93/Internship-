@@ -73,7 +73,7 @@ class TodoFragment(var user: User) : Fragment() {
 
 
         todoItems_recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TasksAdapter(context,items.undoneTasks,user,activity)
+        adapter = TasksAdapter(context,items.undoneTasks.stream().filter { e->e.date==date.toString()}.toList().toMutableList(),user,activity)
         nextDay.setOnClickListener {
             date = date.plusDays(1)
             theDay.setText(date.toString())
